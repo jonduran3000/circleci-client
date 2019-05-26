@@ -7,14 +7,16 @@ object Versions {
 }
 
 object Plugins {
-    const val ANDROID = "com.android.tools.build:gradle:3.5.0-beta01"
+    const val ANDROID = "com.android.tools.build:gradle:3.5.0-beta02"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
+    const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}"
 }
 
 object Dependencies {
     const val KOTLIN_STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN}"
     const val KOTLINX_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLINX_COROUTINES}"
     const val KOTLINX_COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES}"
+    const val KOTLINX_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.0"
     const val ANDROIDX_APPCOMPAT = "androidx.appcompat:appcompat:1.0.2"
     const val ANDROIDX_CORE = "androidx.core:core-ktx:1.0.2"
     const val ANDROIDX_CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:1.1.3"
