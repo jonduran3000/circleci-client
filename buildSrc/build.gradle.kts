@@ -5,9 +5,10 @@ plugins {
 repositories {
     google()
     mavenCentral()
+    maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     jcenter()
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:3.5.0-beta02")
+    implementation("com.android.tools.build:gradle:4.0.0-alpha06")
 }

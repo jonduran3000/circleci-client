@@ -1,12 +1,28 @@
 package com.jonduran.circleci
 
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
+import com.jonduran.circleci.databinding.ActivityMainBinding
+import com.jonduran.circleci.databinding.ActivityMainBinding.inflate
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    internal lateinit var component: MainComponent
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    init {
+        lifecycleScope.launchWhenCreated {
+            component = inject()
+            binding = inflate(layoutInflater)
+            setContentView(binding.root)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.content, BuildListFragment())
+                .commit()
+        }
+    }
+
+    private fun MainActivity.inject(): MainComponent {
+        return CircleCiApp.component.mainComponent()
+            .create()
+            .apply { inject(this@inject) }
     }
 }

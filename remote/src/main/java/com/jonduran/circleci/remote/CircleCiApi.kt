@@ -4,5 +4,8 @@ import retrofit2.http.GET
 
 interface CircleCiApi {
     @GET("me")
-    suspend fun getCurrentUser()
+    suspend fun getUser(): User
+
+    @GET("projects")
+    suspend fun getListOfProjects(): List<Project>
 }
