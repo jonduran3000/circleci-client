@@ -13,8 +13,8 @@ class Repository @Inject constructor(
     private var invalidCache = false
 
     suspend fun getListOfProjects(
-        username: String,
-        sourceControl: Array<SourceControl>
+        sourceControl: Array<SourceControl>,
+        username: String
     ): List<ProjectEntity> {
         val dao = database.projectDao()
         val cache = dao.getProjects(username, sourceControl)
@@ -33,6 +33,10 @@ class Repository @Inject constructor(
         }
         dao.insertAll(toCache)
         return dao.getProjects(username, sourceControl)
+    }
+
+    suspend fun getListOfProjectOwners(): List<String> {
+        return database.projectDao().getProjectOwnerNames()
     }
 
     fun invalidateCache() {

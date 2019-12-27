@@ -29,6 +29,7 @@ dependencies {
     implementation(Dependencies.ANDROIDX_CONSTRAINT_LAYOUT)
     implementation(Dependencies.ANDROIDX_FRAGMENT)
     implementation(Dependencies.ANDROIDX_LIFECYCLE)
+    implementation(Dependencies.ANDROIDX_LIVEDATA)
     implementation(Dependencies.DAGGER)
     kapt(Dependencies.DAGGER_COMPILER)
     implementation(Dependencies.KOTLINX_COROUTINES_CORE)

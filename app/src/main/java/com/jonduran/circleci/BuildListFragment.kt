@@ -1,11 +1,14 @@
 package com.jonduran.circleci
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -17,6 +20,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
+import com.jonduran.circleci.cache.SourceControl
 import com.jonduran.circleci.common.list.BaseAdapter
 import com.jonduran.circleci.data.Repository
 import com.jonduran.circleci.databinding.FragmentBuildListBinding
@@ -24,9 +28,12 @@ import com.jonduran.circleci.databinding.ListItemProjectBinding
 import javax.inject.Inject
 
 class BuildListFragment : Fragment() {
+    @Inject lateinit var repository: Repository
     private lateinit var binding: FragmentBuildListBinding
     private lateinit var component: BuildListComponent
-    @Inject lateinit var repository: Repository
+    private lateinit var vcsDropdownAdapter: ArrayAdapter<SourceControl>
+    private lateinit var orgDropdownAdapter: ArrayAdapter<String>
+
     private val viewModel = viewModels<BuildListViewModel> {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -34,6 +41,7 @@ class BuildListFragment : Fragment() {
             }
         }
     }
+
     private val adapter = object : BaseAdapter<ListItemProjectBinding, ProjectItem>() {
         override fun inflateViewBinding(
             inflater: LayoutInflater,
@@ -46,23 +54,44 @@ class BuildListFragment : Fragment() {
     init {
         lifecycleScope.launchWhenCreated {
             component = inject()
-            (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
-            binding.buildList.adapter = adapter
-            binding.buildList.layoutManager = LinearLayoutManager(requireContext())
-            binding.sheet.background = MaterialShapeDrawable(
-                ShapeAppearanceModel.builder(
-                    binding.sheet.context,
-                    R.style.ShapeAppearance_Stable_Sheet,
-                    0
-                ).build()
-            ).apply {
-                fillColor = ColorStateList.valueOf(Color.WHITE)
-            }
+            vcsDropdownAdapter = ArrayAdapter(
+                requireContext(),
+                R.layout.list_item_backdrop,
+                SourceControl.values()
+            )
+            orgDropdownAdapter = ArrayAdapter(
+                requireContext(),
+                R.layout.list_item_backdrop
+            )
         }
 
         lifecycleScope.launchWhenStarted {
-            viewModel.value.state.observe(this@BuildListFragment) { render(it) }
-            viewModel.value.process(Action.InitialLoad)
+            (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
+            binding.projectList.apply {
+                this.adapter = adapter
+                this.layoutManager = LinearLayoutManager(requireContext())
+            }
+            binding.versionControlDropdown.apply {
+                this.setAdapter(vcsDropdownAdapter)
+                this.setOnItemClickListener { parent, _, position, _ ->
+                    val value = parent.getItemAtPosition(position) as SourceControl
+                    viewModel.value.versionControl.value = arrayOf(value)
+                }
+            }
+            binding.organizationDropdown.setAdapter(orgDropdownAdapter)
+            binding.sheet.background = createRoundedTopBackground(binding.sheet.context)
+            viewModel.value.state.observe(this@BuildListFragment) { state ->
+                render(state)
+            }
+        }
+    }
+
+    private fun createRoundedTopBackground(context: Context): Drawable {
+        val model = ShapeAppearanceModel
+            .builder(context, R.style.ShapeAppearance_Stable_Sheet, 0)
+            .build()
+        return MaterialShapeDrawable(model).apply {
+            fillColor = ColorStateList.valueOf(Color.WHITE)
         }
     }
 
