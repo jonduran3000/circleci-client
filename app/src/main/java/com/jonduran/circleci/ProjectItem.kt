@@ -1,8 +1,8 @@
 package com.jonduran.circleci
 
 import com.jonduran.circleci.common.android.LayoutResource
-import com.jonduran.circleci.common.list.BaseViewHolder
-import com.jonduran.circleci.common.list.Item
+import com.jonduran.circleci.common.ui.list.BaseViewHolder
+import com.jonduran.circleci.common.ui.list.Item
 import com.jonduran.circleci.databinding.ListItemProjectBinding
 
 data class ProjectItem(val name: String, val username: String) : Item<ListItemProjectBinding> {

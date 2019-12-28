@@ -16,12 +16,14 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    viewBinding { isEnabled = true }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
     implementation(project(":data"))
-    implementation(project(":common-list"))
+    implementation(project(":common:ui"))
     implementation(Dependencies.KOTLIN_STDLIB)
     implementation(Dependencies.ANDROIDX_ACTIVITY)
     implementation(Dependencies.ANDROIDX_APPCOMPAT)

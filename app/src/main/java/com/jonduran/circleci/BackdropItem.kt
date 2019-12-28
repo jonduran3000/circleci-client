@@ -1,8 +1,8 @@
 package com.jonduran.circleci
 
 import com.jonduran.circleci.common.android.LayoutResource
-import com.jonduran.circleci.common.list.BaseViewHolder
-import com.jonduran.circleci.common.list.Item
+import com.jonduran.circleci.common.ui.list.BaseViewHolder
+import com.jonduran.circleci.common.ui.list.Item
 import com.jonduran.circleci.databinding.ListItemBackdropBinding
 
 data class BackdropItem(val name: String) : Item<ListItemBackdropBinding> {

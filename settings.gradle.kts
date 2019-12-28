@@ -1,3 +1,2 @@
-include(":data")
-include(":app", ":model", ":cache", ":common-list", ":common-android", ":remote")
+include(":app", ":model", ":cache", ":common:android", ":common:ui", ":data", ":remote")
 rootProject.name="CircleCI"

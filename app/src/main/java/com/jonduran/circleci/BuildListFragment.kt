@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.jonduran.circleci.cache.SourceControl
-import com.jonduran.circleci.common.list.BaseAdapter
+import com.jonduran.circleci.common.ui.list.BaseAdapter
 import com.jonduran.circleci.data.Repository
 import com.jonduran.circleci.databinding.FragmentBuildListBinding
 import com.jonduran.circleci.databinding.ListItemProjectBinding
@@ -67,13 +67,13 @@ class BuildListFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
-            binding.projectList.apply {
-                this.adapter = adapter
-                this.layoutManager = LinearLayoutManager(requireContext())
+            binding.projectList.let { list ->
+                list.adapter = adapter
+                list.layoutManager = LinearLayoutManager(requireContext())
             }
-            binding.versionControlDropdown.apply {
-                this.setAdapter(vcsDropdownAdapter)
-                this.setOnItemClickListener { parent, _, position, _ ->
+            binding.versionControlDropdown.let { dropdown ->
+                dropdown.setAdapter(vcsDropdownAdapter)
+                dropdown.setOnItemClickListener { parent, _, position, _ ->
                     val value = parent.getItemAtPosition(position) as SourceControl
                     viewModel.value.versionControl.value = arrayOf(value)
                 }
