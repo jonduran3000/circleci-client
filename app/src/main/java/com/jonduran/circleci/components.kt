@@ -1,6 +1,8 @@
 package com.jonduran.circleci
 
 import android.app.Application
+import com.jonduran.circleci.annotations.ActivityScope
+import com.jonduran.circleci.annotations.FragmentScope
 import com.jonduran.circleci.data.DataModule
 import dagger.BindsInstance
 import dagger.Component
@@ -8,9 +10,7 @@ import dagger.Subcomponent
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    DataModule::class
-])
+@Component(modules = [DataModule::class])
 interface AppComponent {
     fun inject(app: CircleCiApp)
     fun mainComponent(): MainComponent.Builder

@@ -2,10 +2,12 @@ package com.jonduran.circleci
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.jonduran.circleci.cache.SourceControl
 import com.jonduran.circleci.data.Repository
+import com.jonduran.circleci.extensions.combineLatest
 
 class BuildListViewModel(private val repository: Repository) : ViewModel() {
 
@@ -30,4 +32,20 @@ class BuildListViewModel(private val repository: Repository) : ViewModel() {
                 }
             }
         }
+
+    object Factory : ViewModelProvider.Factory {
+        private lateinit var repository: Repository
+
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return BuildListViewModel(repository) as T
+        }
+
+        operator fun invoke(repository: Repository): Factory {
+            if (!this::repository.isInitialized) {
+                this.repository = repository
+            }
+            return this
+        }
+    }
 }

@@ -13,8 +13,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,11 +33,7 @@ class BuildListFragment : Fragment() {
     private lateinit var orgDropdownAdapter: ArrayAdapter<String>
 
     private val viewModel = viewModels<BuildListViewModel> {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return BuildListViewModel(repository) as T
-            }
-        }
+        BuildListViewModel.Factory(repository)
     }
 
     private val adapter = object : BaseAdapter<ListItemProjectBinding, ProjectItem>() {
@@ -67,21 +61,39 @@ class BuildListFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
-            binding.projectList.let { list ->
-                list.adapter = adapter
-                list.layoutManager = LinearLayoutManager(requireContext())
-            }
-            binding.versionControlDropdown.let { dropdown ->
-                dropdown.setAdapter(vcsDropdownAdapter)
-                dropdown.setOnItemClickListener { parent, _, position, _ ->
-                    val value = parent.getItemAtPosition(position) as SourceControl
-                    viewModel.value.versionControl.value = arrayOf(value)
-                }
-            }
-            binding.organizationDropdown.setAdapter(orgDropdownAdapter)
+            setUpProjectList()
+            setUpVersionControlDropdown()
+            setUpOrganizationDropdown()
             binding.sheet.background = createRoundedTopBackground(binding.sheet.context)
             viewModel.value.state.observe(this@BuildListFragment) { state ->
                 render(state)
+            }
+        }
+    }
+
+    private fun setUpProjectList() {
+        binding.projectList.let { list ->
+            list.adapter = adapter
+            list.layoutManager = LinearLayoutManager(requireContext())
+        }
+    }
+
+    private fun setUpVersionControlDropdown() {
+        binding.versionControlDropdown.let { dropdown ->
+            dropdown.setAdapter(vcsDropdownAdapter)
+            dropdown.setOnItemClickListener { parent, _, position, _ ->
+                val value = parent.getItemAtPosition(position) as SourceControl
+                viewModel.value.versionControl.value = arrayOf(value)
+            }
+        }
+    }
+
+    private fun setUpOrganizationDropdown() {
+        binding.organizationDropdown.let { dropdown ->
+            dropdown.setAdapter(orgDropdownAdapter)
+            dropdown.setOnItemClickListener { parent, _, position, _ ->
+                val value = parent.getItemAtPosition(position) as String
+                viewModel.value.organization.value = value
             }
         }
     }

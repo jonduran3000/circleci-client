@@ -1,5 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE")
-package com.jonduran.circleci
+package com.jonduran.circleci.extensions
 
 import android.content.Context
 import android.graphics.drawable.Drawable

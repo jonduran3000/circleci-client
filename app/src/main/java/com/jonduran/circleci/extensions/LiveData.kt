@@ -1,4 +1,4 @@
-package com.jonduran.circleci
+package com.jonduran.circleci.extensions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
