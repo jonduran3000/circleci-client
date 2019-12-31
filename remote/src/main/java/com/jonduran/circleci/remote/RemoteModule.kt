@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.serialization.json.Json
 import okhttp3.Call
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -17,9 +18,10 @@ import javax.inject.Singleton
 @Module
 object RemoteModule {
     @Provides
-    fun providesOkHttpClient(): OkHttpClient {
+    fun providesOkHttpClient(@Authorization authorization: Interceptor): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(AuthenticationInterceptor())
+            .addInterceptor(ContentHeaders())
+            .addInterceptor(authorization)
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
             })

@@ -13,6 +13,6 @@ dependencies {
     kapt(Dependencies.DAGGER_COMPILER)
     api(Dependencies.OKHTTP)
     api(Dependencies.OKHTTP_LOGGING)
-    implementation(Dependencies.RETROFIT)
+    api(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_SERIALIZATION_CONVERTER)
 }

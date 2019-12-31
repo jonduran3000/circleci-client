@@ -20,6 +20,7 @@ dependencies {
     api(project(":remote"))
     implementation(Dependencies.KOTLIN_STDLIB)
     implementation(Dependencies.ANDROIDX_ANNOTATION)
+    api(Dependencies.ANDROIDX_SECURITY)
     implementation(Dependencies.DAGGER)
     kapt(Dependencies.DAGGER_COMPILER)
     testImplementation(Dependencies.JUNIT)

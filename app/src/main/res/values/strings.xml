@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CircleCI</string>
+    <string name="api_key">API Key</string>
+    <string name="submit">Submit</string>
 </resources>

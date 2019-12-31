@@ -32,7 +32,7 @@ class BuildListFragment : Fragment() {
     private lateinit var vcsDropdownAdapter: ArrayAdapter<SourceControl>
     private lateinit var orgDropdownAdapter: ArrayAdapter<String>
 
-    private val viewModel = viewModels<BuildListViewModel> {
+    private val viewModel by viewModels<BuildListViewModel> {
         BuildListViewModel.Factory(repository)
     }
 
@@ -65,7 +65,7 @@ class BuildListFragment : Fragment() {
             setUpVersionControlDropdown()
             setUpOrganizationDropdown()
             binding.sheet.background = createRoundedTopBackground(binding.sheet.context)
-            viewModel.value.state.observe(this@BuildListFragment) { state ->
+            viewModel.state.observe(this@BuildListFragment) { state ->
                 render(state)
             }
         }
@@ -83,7 +83,7 @@ class BuildListFragment : Fragment() {
             dropdown.setAdapter(vcsDropdownAdapter)
             dropdown.setOnItemClickListener { parent, _, position, _ ->
                 val value = parent.getItemAtPosition(position) as SourceControl
-                viewModel.value.versionControl.value = arrayOf(value)
+                viewModel.versionControl.value = arrayOf(value)
             }
         }
     }
@@ -93,7 +93,7 @@ class BuildListFragment : Fragment() {
             dropdown.setAdapter(orgDropdownAdapter)
             dropdown.setOnItemClickListener { parent, _, position, _ ->
                 val value = parent.getItemAtPosition(position) as String
-                viewModel.value.organization.value = value
+                viewModel.organization.value = value
             }
         }
     }

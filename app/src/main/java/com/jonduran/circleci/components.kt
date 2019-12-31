@@ -25,11 +25,23 @@ interface AppComponent {
 @Subcomponent
 interface MainComponent {
     fun inject(activity: MainActivity)
+    fun keyEntryComponent(): KeyEntryComponent.Builder
     fun buildListComponent(): BuildListComponent.Builder
 
     @Subcomponent.Builder
     interface Builder {
         fun create(): MainComponent
+    }
+}
+
+@FragmentScope
+@Subcomponent
+interface KeyEntryComponent {
+    fun inject(fragment: KeyEntryFragment)
+
+    @Subcomponent.Builder
+    interface Builder {
+        fun create(): KeyEntryComponent
     }
 }
 

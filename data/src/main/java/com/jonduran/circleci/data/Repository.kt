@@ -2,11 +2,16 @@ package com.jonduran.circleci.data
 
 import com.jonduran.circleci.cache.ProjectEntity
 import com.jonduran.circleci.cache.SourceControl
+import dagger.Lazy
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.Credentials
 import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val remoteSource: RemoteProjectDataSource,
-    private val localSource: LocalProjectDataSource
+    private val localSource: LocalProjectDataSource,
+    private val store: Lazy<DataStore>
 ) {
     private var invalidCache = false
 
@@ -26,6 +31,15 @@ class Repository @Inject constructor(
 
     suspend fun getListOfProjectOwners(): List<String> {
         return localSource.getListOfProjectOwners()
+    }
+
+    suspend fun storeKey(key: String) = withContext(Dispatchers.Default) {
+        val credentials = Credentials.basic(key, "")
+        store.get().setCredentials(credentials)
+    }
+
+    suspend fun hasCredentials() = withContext(Dispatchers.Default) {
+        store.get().hasCredentials()
     }
 
     fun invalidateCache() {

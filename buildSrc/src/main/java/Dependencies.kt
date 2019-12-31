@@ -28,6 +28,7 @@ object Dependencies {
     const val ANDROIDX_LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc03"
     const val ANDROIDX_RECYCLERVIEW = "androidx.recyclerview:recyclerview:1.1.0"
     const val ANDROIDX_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03"
+    const val ANDROIDX_SECURITY = "androidx.security:security-crypto:1.0.0-alpha02"
     const val JUNIT = "junit:junit:4.12"
     const val ANDROIDX_TEST_JUNIT = "androidx.test.ext:junit:1.1.0"
     const val ANDROIDX_TEST_ESPRESSO = "androidx.test.espresso:espresso-core:3.1.1"
