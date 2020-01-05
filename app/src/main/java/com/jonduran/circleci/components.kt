@@ -4,6 +4,8 @@ import android.app.Application
 import com.jonduran.circleci.annotations.ActivityScope
 import com.jonduran.circleci.annotations.FragmentScope
 import com.jonduran.circleci.data.DataModule
+import com.jonduran.circleci.key.KeyEntryFragment
+import com.jonduran.circleci.project.list.ProjectListFragment
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Subcomponent
@@ -48,7 +50,7 @@ interface KeyEntryComponent {
 @FragmentScope
 @Subcomponent
 interface BuildListComponent {
-    fun inject(fragment: BuildListFragment)
+    fun inject(fragment: ProjectListFragment)
 
     @Subcomponent.Builder
     interface Builder {

@@ -2,6 +2,8 @@
 <resources>
     <dimen name="image_corner_radius">50dp</dimen>
     <dimen name="backdrop_reveal_height">200dp</dimen>
+    <dimen name="snackbar_margin">12dp</dimen>
+    <dimen name="snackbar_elevation">4dp</dimen>
 
     <!--Emphasis modifiers for "on" colors-->
     <dimen name="alpha_emphasis_high">@dimen/material_emphasis_high_type</dimen>

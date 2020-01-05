@@ -1,5 +1,6 @@
-package com.jonduran.circleci
+package com.jonduran.circleci.project.list
 
+import com.jonduran.circleci.R
 import com.jonduran.circleci.common.android.LayoutResource
 import com.jonduran.circleci.common.ui.list.BaseViewHolder
 import com.jonduran.circleci.common.ui.list.Item

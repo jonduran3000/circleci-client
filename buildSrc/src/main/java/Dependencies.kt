@@ -26,6 +26,7 @@ object Dependencies {
     const val ANDROIDX_CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:1.1.3"
     const val ANDROIDX_FRAGMENT = "androidx.fragment:fragment-ktx:1.2.0-beta02"
     const val ANDROIDX_LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc03"
+    const val ANDROIDX_VIEWMODEL_SAVEDSTATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-rc03"
     const val ANDROIDX_RECYCLERVIEW = "androidx.recyclerview:recyclerview:1.1.0"
     const val ANDROIDX_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03"
     const val ANDROIDX_SECURITY = "androidx.security:security-crypto:1.0.0-alpha02"

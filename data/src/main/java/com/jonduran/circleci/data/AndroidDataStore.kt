@@ -14,6 +14,10 @@ class AndroidDataStore @Inject constructor(private val preferences: SharedPrefer
         return preferences.getString("credentials", null)
     }
 
+    override fun deleteCredentials(): Boolean {
+        return preferences.edit().remove("credentials").commit()
+    }
+
     override fun hasCredentials(): Boolean {
         return preferences.contains("credentials")
     }

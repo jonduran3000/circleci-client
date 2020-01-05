@@ -1,40 +1,51 @@
 package com.jonduran.circleci
 
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
-import com.jonduran.circleci.data.Repository
+import com.jonduran.circleci.data.UserRepository
 import com.jonduran.circleci.databinding.ActivityMainBinding
 import com.jonduran.circleci.databinding.ActivityMainBinding.inflate
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.jonduran.circleci.extensions.observe
+import com.jonduran.circleci.key.KeyEntryFragment
+import com.jonduran.circleci.project.list.ProjectListFragment
+import com.jonduran.circleci.utils.exhaustive
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
-    @Inject lateinit var repository: Repository
+    @Inject lateinit var repository: UserRepository
     private lateinit var binding: ActivityMainBinding
-    internal lateinit var component: MainComponent
+    private var component: MainComponent? = null
 
-    private val viewModel by viewModels<MainViewModel> { MainViewModel.Factory(repository) }
+    private val viewModel by viewModels<MainViewModel> {
+        MainViewModel.Factory(repository, this)
+    }
 
     init {
         lifecycleScope.launchWhenCreated {
-            component = inject()
+            getComponent().inject(this@MainActivity)
             binding = inflate(layoutInflater)
             setContentView(binding.root)
-            viewModel.state.onEach { render(it) }.launchIn(this)
-            viewModel.process(MainViewModel.Action.LoadData)
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.state.observe(this) { state ->
+                render(state)
+            }
         }
     }
 
     private fun render(state: MainViewModel.State) {
+        Log.d("MainActivity", state.toString())
         when (state) {
             is MainViewModel.State.Loading -> {}
+            is MainViewModel.State.SavedInstance -> {}
             is MainViewModel.State.Success -> goToProjectListScreen()
             is MainViewModel.State.Unauthorized -> goToKeyEntryScreen()
             is MainViewModel.State.Failure -> {}
-        }
+        }.exhaustive
     }
 
     fun goToKeyEntryScreen() {
@@ -45,13 +56,17 @@ class MainActivity : AppCompatActivity() {
 
     fun goToProjectListScreen() {
         supportFragmentManager.commit {
-            replace(R.id.content, BuildListFragment())
+            replace(R.id.content, ProjectListFragment())
         }
     }
 
-    private fun MainActivity.inject(): MainComponent {
-        return CircleCiApp.component.mainComponent()
-            .create()
-            .apply { inject(this@inject) }
+    override fun onRetainCustomNonConfigurationInstance(): Any? {
+        return component
+    }
+
+    fun getComponent(): MainComponent {
+        return component
+            ?: lastNonConfigurationInstance as? MainComponent
+            ?: CircleCiApp.component.mainComponent().create()
     }
 }

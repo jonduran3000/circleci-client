@@ -2,4 +2,6 @@
     <string name="app_name">CircleCI</string>
     <string name="api_key">API Key</string>
     <string name="submit">Submit</string>
+    <string name="version_control_source">Version Control Source</string>
+    <string name="organization">Organization</string>
 </resources>
