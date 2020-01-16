@@ -1,6 +1,7 @@
 @file:Suppress("NOTHING_TO_INLINE")
 package com.jonduran.circleci.extensions
 
+import android.app.Application
 import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
@@ -26,4 +27,8 @@ inline fun Context.getColorCompat(@ColorRes res: Int): Int {
 @ColorInt
 inline fun Context.getColorCompat(resource: ColorResource): Int {
     return ContextCompat.getColor(this, resource.res)
+}
+
+inline fun <reified A : Application> Context.getApplication(): A {
+    return applicationContext as A
 }

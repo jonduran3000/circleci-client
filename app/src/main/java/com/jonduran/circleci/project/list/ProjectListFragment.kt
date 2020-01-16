@@ -5,56 +5,45 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import com.jonduran.circleci.BuildListComponent
-import com.jonduran.circleci.MainActivity
-import com.jonduran.circleci.data.ProjectRepository
+import com.jonduran.circleci.common.ui.fragment.InjectedFragment
 import com.jonduran.circleci.databinding.FragmentProjectListBinding
 import com.jonduran.circleci.databinding.FragmentProjectListBinding.inflate
 import javax.inject.Inject
 
-class ProjectListFragment : Fragment() {
-    @Inject lateinit var projectRepository: ProjectRepository
-    private lateinit var binding: FragmentProjectListBinding
-    private lateinit var uiComponent: ProjectListComponent
-    private lateinit var component: BuildListComponent
+class ProjectListFragment : InjectedFragment<FragmentProjectListBinding>() {
+    @Inject lateinit var factory: ProjectListViewModelFactory
+    private var uiComponent: ProjectListUiComponent? = null
 
-    private val viewModel by viewModels<ProjectListViewModel> {
-        ProjectListViewModel.Factory(projectRepository, this)
-    }
+    private val viewModel by viewModels<ProjectListViewModel> { factory }
+
+    override val inflateBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProjectListBinding
+        get() = { inflater, container, attachToRoot ->
+            inflate(inflater, container, attachToRoot)
+        }
 
     init {
-        lifecycleScope.launchWhenCreated { component = inject() }
-
         lifecycleScope.launchWhenStarted {
             (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
             viewModel.state.observe(this@ProjectListFragment) { state ->
-                uiComponent.render(state)
+                uiComponent?.render(state)
             }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = inflate(inflater, container, false)
-        uiComponent = ProjectListComponent(
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        uiComponent = ProjectListUiComponent(
             binding = binding,
-            onVersionControlChange = { viewModel.versionControl.setValue(it) },
-            onOrganizationChange = { viewModel.organization.setValue(it) }
+            onVersionControlChange = { vcs -> viewModel.versionControl.setValue(vcs) },
+            onOrganizationChange = { org -> viewModel.organization.setValue(org) }
         )
-        return binding.root
     }
 
-    private fun ProjectListFragment.inject(): BuildListComponent {
-        return (requireActivity() as MainActivity).getComponent()
-            .buildListComponent()
-            .create()
-            .apply { inject(this@inject) }
+    override fun onDestroyView() {
+        uiComponent = null
+        super.onDestroyView()
     }
 }

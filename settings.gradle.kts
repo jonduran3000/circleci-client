@@ -5,6 +5,7 @@ include(
     ":common:android",
     ":common:ui",
     ":common:utils",
+    ":common:viewmodel",
     ":data",
     ":remote"
 )

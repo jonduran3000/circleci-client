@@ -20,11 +20,11 @@ import com.jonduran.circleci.databinding.ListItemProjectBinding
 import com.jonduran.circleci.extensions.float
 import com.jonduran.circleci.utils.exhaustive
 
-class ProjectListComponent(
+class ProjectListUiComponent(
     binding: FragmentProjectListBinding,
     private val onVersionControlChange: (Array<SourceControl>) -> Unit,
     private val onOrganizationChange: (String) -> Unit
-) : UiComponent<FragmentProjectListBinding, ProjectListComponent.State>(binding) {
+) : UiComponent<FragmentProjectListBinding, ProjectListUiComponent.State>(binding) {
     private lateinit var orgDropdownAdapter: ArrayAdapter<String>
     private val adapter = object : BaseAdapter<ListItemProjectBinding, ProjectItem>() {
         override fun inflateViewBinding(

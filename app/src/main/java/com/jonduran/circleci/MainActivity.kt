@@ -1,11 +1,11 @@
 package com.jonduran.circleci
 
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
-import com.jonduran.circleci.data.UserRepository
+import com.jonduran.circleci.common.ui.activity.InjectingActivity
 import com.jonduran.circleci.databinding.ActivityMainBinding
 import com.jonduran.circleci.databinding.ActivityMainBinding.inflate
 import com.jonduran.circleci.extensions.observe
@@ -14,26 +14,16 @@ import com.jonduran.circleci.project.list.ProjectListFragment
 import com.jonduran.circleci.utils.exhaustive
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
-    @Inject lateinit var repository: UserRepository
-    private lateinit var binding: ActivityMainBinding
-    private var component: MainComponent? = null
+class MainActivity : InjectingActivity<ActivityMainBinding>() {
+    @Inject lateinit var factory: MainViewModelFactory
 
-    private val viewModel by viewModels<MainViewModel> {
-        MainViewModel.Factory(repository, this)
-    }
+    private val viewModel by viewModels<MainViewModel> { factory }
+
+    override val inflateBinding: (LayoutInflater) -> ActivityMainBinding = { inflate(it) }
 
     init {
-        lifecycleScope.launchWhenCreated {
-            getComponent().inject(this@MainActivity)
-            binding = inflate(layoutInflater)
-            setContentView(binding.root)
-        }
-
         lifecycleScope.launchWhenStarted {
-            viewModel.state.observe(this) { state ->
-                render(state)
-            }
+            viewModel.state.observe(this, ::render)
         }
     }
 
@@ -58,15 +48,5 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             replace(R.id.content, ProjectListFragment())
         }
-    }
-
-    override fun onRetainCustomNonConfigurationInstance(): Any? {
-        return component
-    }
-
-    fun getComponent(): MainComponent {
-        return component
-            ?: lastNonConfigurationInstance as? MainComponent
-            ?: CircleCiApp.component.mainComponent().create()
     }
 }

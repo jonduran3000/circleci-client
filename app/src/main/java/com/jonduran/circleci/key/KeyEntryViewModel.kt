@@ -1,7 +1,7 @@
 package com.jonduran.circleci.key
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.jonduran.circleci.data.UserRepository
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class KeyEntryViewModel(private val userRepository: UserRepository) : ViewModel() {
+class KeyEntryViewModel(
+    savedState: SavedStateHandle,
+    private val userRepository: UserRepository
+) : ViewModel() {
     private val _state = ConflatedBroadcastChannel<State>()
     val state: Flow<State> = _state.asFlow()
 
@@ -35,7 +38,9 @@ class KeyEntryViewModel(private val userRepository: UserRepository) : ViewModel(
         try {
             userRepository.storeKey(key.toString())
             userRepository.getCurrentUser()
-            _state.offer(State.Success)
+            if (!_state.isClosedForSend) {
+                _state.offer(State.Success)
+            }
         } catch (e: Exception) {
             checkForUnauthorizedError(e)
         }
@@ -43,30 +48,12 @@ class KeyEntryViewModel(private val userRepository: UserRepository) : ViewModel(
 
     private suspend fun checkForUnauthorizedError(e: Exception) {
         userRepository.deleteKey()
-        if (e is HttpException && e.code() == 401) {
-            _state.offer(State.InvalidKey)
-        } else {
-            _state.offer(
-                State.Failure(
-                    e
-                )
-            )
-        }
-    }
-
-    object Factory : ViewModelProvider.Factory {
-        private lateinit var repository: UserRepository
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return KeyEntryViewModel(repository) as T
-        }
-
-        operator fun invoke(repository: UserRepository): Factory {
-            if (!this::repository.isInitialized) {
-                Factory.repository = repository
+        if (!_state.isClosedForSend) {
+            if (e is HttpException && e.code() == 401) {
+                _state.offer(State.InvalidKey)
+            } else {
+                _state.offer(State.Failure(e))
             }
-            return this
         }
     }
 

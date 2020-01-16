@@ -6,10 +6,11 @@ object Versions {
     const val RETROFIT = "2.6.1"
     const val GLIDE = "4.10.0"
     const val ROOM = "2.2.3"
+    const val ASSISTED_INJECT = "0.5.2"
 }
 
 object Plugins {
-    const val ANDROID = "com.android.tools.build:gradle:4.0.0-alpha06"
+    const val ANDROID = "com.android.tools.build:gradle:4.0.0-alpha08"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}"
 }
@@ -26,6 +27,9 @@ object Dependencies {
     const val ANDROIDX_CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:1.1.3"
     const val ANDROIDX_FRAGMENT = "androidx.fragment:fragment-ktx:1.2.0-beta02"
     const val ANDROIDX_LIFECYCLE = "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-rc03"
+    const val ANDROIDX_LIFECYCLE_EXT = "androidx.lifecycle:lifecycle-extensions:2.2.0-rc03"
+    const val ANDROIDX_LIFECYCLE_JAVA8 = "androidx.lifecycle:lifecycle-common-java8:2.2.0-rc03"
+    const val ANDROIDX_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03"
     const val ANDROIDX_VIEWMODEL_SAVEDSTATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-rc03"
     const val ANDROIDX_RECYCLERVIEW = "androidx.recyclerview:recyclerview:1.1.0"
     const val ANDROIDX_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03"
@@ -35,6 +39,10 @@ object Dependencies {
     const val ANDROIDX_TEST_ESPRESSO = "androidx.test.espresso:espresso-core:3.1.1"
     const val DAGGER = "com.google.dagger:dagger:${Versions.DAGGER}"
     const val DAGGER_COMPILER = "com.google.dagger:dagger-compiler:${Versions.DAGGER}"
+    const val DAGGER_ANDROID = "com.google.dagger:dagger-android-support:${Versions.DAGGER}"
+    const val DAGGER_ANDROID_COMPILER = "com.google.dagger:dagger-android-processor:${Versions.DAGGER}"
+    const val ASSISTED_INJECT = "com.squareup.inject:assisted-inject-annotations-dagger2:${Versions.ASSISTED_INJECT}"
+    const val ASSISTED_INJECT_COMPILER = "com.squareup.inject:assisted-inject-processor-dagger2:${Versions.ASSISTED_INJECT}"
     const val OKHTTP = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
     const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}"
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
