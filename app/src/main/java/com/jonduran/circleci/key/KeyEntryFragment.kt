@@ -1,11 +1,10 @@
 package com.jonduran.circleci.key
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.jonduran.circleci.MainActivity
+import com.jonduran.circleci.common.ui.fragment.Binder
 import com.jonduran.circleci.common.ui.fragment.InjectedFragment
 import com.jonduran.circleci.databinding.FragmentKeyEntryBinding
 import com.jonduran.circleci.databinding.FragmentKeyEntryBinding.inflate
@@ -16,11 +15,11 @@ import kotlinx.android.synthetic.main.fragment_key_entry.*
 import javax.inject.Inject
 
 class KeyEntryFragment : InjectedFragment<FragmentKeyEntryBinding>() {
-    @Inject lateinit var factory: KeyEntryViewModelFactory
+    @Inject lateinit var factory: KeyEntryViewModel.Factory
 
     private val viewModel by viewModels<KeyEntryViewModel> { factory }
 
-    override val inflateBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentKeyEntryBinding
+    override val inflateBinding: Binder<FragmentKeyEntryBinding>
         get() = { inflater, container, attachToRoot ->
             inflate(inflater, container, attachToRoot)
         }

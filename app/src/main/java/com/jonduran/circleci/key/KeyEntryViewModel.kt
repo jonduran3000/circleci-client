@@ -1,14 +1,19 @@
 package com.jonduran.circleci.key
 
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.savedstate.SavedStateRegistryOwner
 import com.jonduran.circleci.data.UserRepository
+import com.jonduran.circleci.extensions.safeOffer
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import javax.inject.Inject
+import javax.inject.Named
 
 class KeyEntryViewModel(
     savedState: SavedStateHandle,
@@ -27,7 +32,7 @@ class KeyEntryViewModel(
         viewModelScope.launch {
             val key = action.key
             if (key.isNullOrEmpty()) {
-                _state.offer(State.EmptyKey)
+                _state.safeOffer(State.EmptyKey)
             } else {
                 storeApiKey(key)
             }
@@ -38,9 +43,7 @@ class KeyEntryViewModel(
         try {
             userRepository.storeKey(key.toString())
             userRepository.getCurrentUser()
-            if (!_state.isClosedForSend) {
-                _state.offer(State.Success)
-            }
+            _state.safeOffer(State.Success)
         } catch (e: Exception) {
             checkForUnauthorizedError(e)
         }
@@ -48,12 +51,10 @@ class KeyEntryViewModel(
 
     private suspend fun checkForUnauthorizedError(e: Exception) {
         userRepository.deleteKey()
-        if (!_state.isClosedForSend) {
-            if (e is HttpException && e.code() == 401) {
-                _state.offer(State.InvalidKey)
-            } else {
-                _state.offer(State.Failure(e))
-            }
+        if (e is HttpException && e.code() == 401) {
+            _state.safeOffer(State.InvalidKey)
+        } else {
+            _state.safeOffer(State.Failure(e))
         }
     }
 
@@ -66,5 +67,19 @@ class KeyEntryViewModel(
         object InvalidKey : State()
         object Success : State()
         data class Failure(val error: Throwable) : State()
+    }
+
+    class Factory @Inject constructor(
+        @Named("KeyEntry") owner: SavedStateRegistryOwner,
+        private val repository: UserRepository
+    ) : AbstractSavedStateViewModelFactory(owner, null) {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel?> create(
+            key: String,
+            modelClass: Class<T>,
+            handle: SavedStateHandle
+        ): T {
+            return KeyEntryViewModel(handle, repository) as T
+        }
     }
 }

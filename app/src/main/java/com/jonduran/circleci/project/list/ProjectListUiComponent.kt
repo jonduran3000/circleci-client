@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -16,7 +14,6 @@ import com.jonduran.circleci.UiComponent
 import com.jonduran.circleci.cache.SourceControl
 import com.jonduran.circleci.common.ui.list.BaseAdapter
 import com.jonduran.circleci.databinding.FragmentProjectListBinding
-import com.jonduran.circleci.databinding.ListItemProjectBinding
 import com.jonduran.circleci.extensions.float
 import com.jonduran.circleci.utils.exhaustive
 
@@ -26,14 +23,7 @@ class ProjectListUiComponent(
     private val onOrganizationChange: (String) -> Unit
 ) : UiComponent<FragmentProjectListBinding, ProjectListUiComponent.State>(binding) {
     private lateinit var orgDropdownAdapter: ArrayAdapter<String>
-    private val adapter = object : BaseAdapter<ListItemProjectBinding, ProjectItem>() {
-        override fun inflateViewBinding(
-            inflater: LayoutInflater,
-            parent: ViewGroup
-        ): ListItemProjectBinding {
-            return ListItemProjectBinding.inflate(inflater, parent, false)
-        }
-    }
+    private val adapter = BaseAdapter<ProjectItem>()
 
     init {
         setUpProjectList()

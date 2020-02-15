@@ -11,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.jonduran.circleci.common.ui.utils.autoCleared
 
+typealias Binder<B> = (LayoutInflater, ViewGroup?, Boolean) -> B
+
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
-    protected var binding: B by autoCleared() // https://stackoverflow.com/a/59504797
-    abstract val inflateBinding: (LayoutInflater, ViewGroup?, Boolean) -> B
+    protected var binding by autoCleared<B>() // https://stackoverflow.com/a/59504797
+    abstract val inflateBinding: Binder<B>
 
     protected val onBackPressed: (() -> Unit)? = null
     protected var onBackPressedEnabled: Boolean = false

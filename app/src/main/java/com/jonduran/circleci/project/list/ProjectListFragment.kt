@@ -1,25 +1,24 @@
 package com.jonduran.circleci.project.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
+import com.jonduran.circleci.common.ui.fragment.Binder
 import com.jonduran.circleci.common.ui.fragment.InjectedFragment
 import com.jonduran.circleci.databinding.FragmentProjectListBinding
 import com.jonduran.circleci.databinding.FragmentProjectListBinding.inflate
 import javax.inject.Inject
 
 class ProjectListFragment : InjectedFragment<FragmentProjectListBinding>() {
-    @Inject lateinit var factory: ProjectListViewModelFactory
+    @Inject lateinit var factory: ProjectListViewModel.Factory
     private var uiComponent: ProjectListUiComponent? = null
 
     private val viewModel by viewModels<ProjectListViewModel> { factory }
 
-    override val inflateBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProjectListBinding
+    override val inflateBinding: Binder<FragmentProjectListBinding>
         get() = { inflater, container, attachToRoot ->
             inflate(inflater, container, attachToRoot)
         }

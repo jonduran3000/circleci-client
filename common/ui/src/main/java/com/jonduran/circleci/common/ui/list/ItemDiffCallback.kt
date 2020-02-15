@@ -1,10 +1,9 @@
 package com.jonduran.circleci.common.ui.list
 
 import androidx.recyclerview.widget.DiffUtil
-import androidx.viewbinding.ViewBinding
 import java.util.Objects
 
-class ItemDiffCallback<V : ViewBinding, I : Item<V>> : DiffUtil.ItemCallback<I>() {
+class ItemDiffCallback<I : Item> : DiffUtil.ItemCallback<I>() {
     override fun areItemsTheSame(oldItem: I, newItem: I): Boolean {
         return oldItem.uniqueId == newItem.uniqueId
     }
