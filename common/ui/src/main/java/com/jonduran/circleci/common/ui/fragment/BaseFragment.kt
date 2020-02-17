@@ -8,14 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
 import com.jonduran.circleci.common.ui.utils.autoCleared
 
-typealias Binder<B> = (LayoutInflater, ViewGroup?, Boolean) -> B
+typealias Inflate<B> = (LayoutInflater, ViewGroup?, Boolean) -> B
 
 abstract class BaseFragment<B : ViewBinding> : Fragment() {
     protected var binding by autoCleared<B>() // https://stackoverflow.com/a/59504797
-    abstract val inflateBinding: Binder<B>
+    abstract val inflateBinding: Inflate<B>
 
     protected val onBackPressed: (() -> Unit)? = null
     protected var onBackPressedEnabled: Boolean = false
@@ -28,7 +29,7 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
                     onBackPressed.invoke()
                 }
             }
-            requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+            (context as FragmentActivity).onBackPressedDispatcher.addCallback(this, callback)
         }
     }
 

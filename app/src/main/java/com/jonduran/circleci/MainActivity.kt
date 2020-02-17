@@ -16,10 +16,9 @@ import javax.inject.Inject
 
 class MainActivity : InjectingActivity<ActivityMainBinding>() {
     @Inject lateinit var factory: MainViewModel.Factory
-
     private val viewModel by viewModels<MainViewModel> { factory }
 
-    override val inflateBinding: (LayoutInflater) -> ActivityMainBinding = { inflate(it) }
+    override val inflateBinding: (LayoutInflater) -> ActivityMainBinding = ::inflate
 
     init {
         lifecycleScope.launchWhenStarted {

@@ -4,29 +4,27 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.jonduran.circleci.MainActivity
-import com.jonduran.circleci.common.ui.fragment.Binder
+import com.jonduran.circleci.common.ui.fragment.Inflate
 import com.jonduran.circleci.common.ui.fragment.InjectedFragment
 import com.jonduran.circleci.databinding.FragmentKeyEntryBinding
 import com.jonduran.circleci.databinding.FragmentKeyEntryBinding.inflate
 import com.jonduran.circleci.extensions.float
 import com.jonduran.circleci.extensions.observe
 import com.jonduran.circleci.utils.exhaustive
-import kotlinx.android.synthetic.main.fragment_key_entry.*
 import javax.inject.Inject
 
 class KeyEntryFragment : InjectedFragment<FragmentKeyEntryBinding>() {
     @Inject lateinit var factory: KeyEntryViewModel.Factory
-
     private val viewModel by viewModels<KeyEntryViewModel> { factory }
 
-    override val inflateBinding: Binder<FragmentKeyEntryBinding>
+    override val inflateBinding: Inflate<FragmentKeyEntryBinding>
         get() = { inflater, container, attachToRoot ->
             inflate(inflater, container, attachToRoot)
         }
 
     init {
         lifecycleScope.launchWhenStarted {
-            submitButton.setOnClickListener {
+            binding.submitButton.setOnClickListener {
                 val text = binding.keyInput.text
                 val action = KeyEntryViewModel.Action.OnSubmitClicked(text)
                 viewModel.process(action)
