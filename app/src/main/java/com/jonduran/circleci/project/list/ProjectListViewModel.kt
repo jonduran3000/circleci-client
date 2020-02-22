@@ -5,12 +5,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import androidx.savedstate.SavedStateRegistryOwner
 import com.jonduran.circleci.cache.SourceControl
 import com.jonduran.circleci.data.ProjectRepository
 import com.jonduran.circleci.extensions.combineLatest
 import javax.inject.Inject
-import javax.inject.Named
 
 class ProjectListViewModel(
     savedState: SavedStateHandle,
@@ -41,9 +39,9 @@ class ProjectListViewModel(
     }
 
     class Factory @Inject constructor(
-        @Named("ProjectList") owner: SavedStateRegistryOwner,
+        fragment: ProjectListFragment,
         private val repository: ProjectRepository
-    ) : AbstractSavedStateViewModelFactory(owner, null) {
+    ) : AbstractSavedStateViewModelFactory(fragment, fragment.arguments) {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(
             key: String,

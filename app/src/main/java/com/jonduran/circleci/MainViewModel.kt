@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.savedstate.SavedStateRegistryOwner
 import com.jonduran.circleci.data.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -41,9 +40,9 @@ class MainViewModel(
     }
 
     class Factory @Inject constructor(
-        owner: SavedStateRegistryOwner,
+        activity: MainActivity,
         private val repository: UserRepository
-    ) : AbstractSavedStateViewModelFactory(owner, null) {
+    ) : AbstractSavedStateViewModelFactory(activity, activity.intent.extras) {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(
             key: String,

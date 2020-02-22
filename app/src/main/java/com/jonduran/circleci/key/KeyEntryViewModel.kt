@@ -4,7 +4,6 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.savedstate.SavedStateRegistryOwner
 import com.jonduran.circleci.data.UserRepository
 import com.jonduran.circleci.extensions.safeOffer
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import javax.inject.Inject
-import javax.inject.Named
 
 class KeyEntryViewModel(
     savedState: SavedStateHandle,
@@ -70,9 +68,9 @@ class KeyEntryViewModel(
     }
 
     class Factory @Inject constructor(
-        @Named("KeyEntry") owner: SavedStateRegistryOwner,
+        fragment: KeyEntryFragment,
         private val repository: UserRepository
-    ) : AbstractSavedStateViewModelFactory(owner, null) {
+    ) : AbstractSavedStateViewModelFactory(fragment, fragment.arguments) {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(
             key: String,

@@ -7,7 +7,7 @@ import androidx.lifecycle.observe
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-internal class AutoClearedValue<T : Any>(fragment: Fragment) : ReadWriteProperty<Fragment, T> {
+class AutoClearedValue<T : Any>(fragment: Fragment) : ReadWriteProperty<Fragment, T> {
     init {
         val clearOnDestroy = object : DefaultLifecycleObserver {
             override fun onDestroy(owner: LifecycleOwner) {
@@ -37,4 +37,4 @@ internal class AutoClearedValue<T : Any>(fragment: Fragment) : ReadWriteProperty
     }
 }
 
-internal fun <T : Any> Fragment.autoCleared() = AutoClearedValue<T>(this)
+fun <T : Any> Fragment.autoCleared() = AutoClearedValue<T>(this)

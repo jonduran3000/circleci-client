@@ -1,20 +1,18 @@
 package com.jonduran.circleci
 
 import com.jonduran.circleci.key.KeyEntryFragment
-import com.jonduran.circleci.key.KeyEntryModule
 import com.jonduran.circleci.project.list.ProjectListFragment
-import com.jonduran.circleci.project.list.ProjectListModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class AppBindings {
-    @ContributesAndroidInjector(modules = [MainModule::class])
+    @ContributesAndroidInjector
     abstract fun mainActivity(): MainActivity
 
-    @ContributesAndroidInjector(modules = [KeyEntryModule::class])
+    @ContributesAndroidInjector
     abstract fun keyEntryFragment(): KeyEntryFragment
 
-    @ContributesAndroidInjector(modules = [ProjectListModule::class])
+    @ContributesAndroidInjector
     abstract fun projectListFragment(): ProjectListFragment
 }
