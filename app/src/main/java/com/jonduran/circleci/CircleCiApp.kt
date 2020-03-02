@@ -6,19 +6,13 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-class CircleCiApp : Application(), HasAndroidInjector {
+open class CircleCiApp : Application(), HasAndroidInjector {
     @Inject lateinit var injector: DispatchingAndroidInjector<Any>
-    lateinit var component: AppComponent
-        private set
 
     override fun onCreate() {
         super.onCreate()
-        component = createComponent().apply { inject(this@CircleCiApp) }
+        Injector.inject(this)
     }
 
     override fun androidInjector(): AndroidInjector<Any> = injector
-}
-
-fun CircleCiApp.createComponent(): AppComponent {
-    return DaggerAppComponent.factory().create(this)
 }

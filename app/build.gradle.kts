@@ -38,7 +38,7 @@ dependencies {
     kapt(Dependencies.DAGGER_COMPILER)
     implementation(Dependencies.DAGGER_ANDROID)
     kapt(Dependencies.DAGGER_ANDROID_COMPILER)
-    implementation(Dependencies.ASSISTED_INJECT)
+    compileOnly(Dependencies.ASSISTED_INJECT)
     kapt(Dependencies.ASSISTED_INJECT_COMPILER)
     implementation(Dependencies.KOTLINX_COROUTINES_CORE)
     implementation(Dependencies.KOTLINX_COROUTINES_ANDROID)

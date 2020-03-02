@@ -6,10 +6,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class AppBindings {
-    @ContributesAndroidInjector
-    abstract fun mainActivity(): MainActivity
-
+abstract class FragmentBindings {
     @ContributesAndroidInjector
     abstract fun keyEntryFragment(): KeyEntryFragment
 

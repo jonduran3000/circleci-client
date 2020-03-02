@@ -1,29 +1,33 @@
 package com.jonduran.circleci
 
+import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.jonduran.circleci.common.ui.activity.InjectingActivity
+import com.jonduran.circleci.common.ui.utils.viewBinding
 import com.jonduran.circleci.databinding.ActivityMainBinding
-import com.jonduran.circleci.databinding.ActivityMainBinding.inflate
 import com.jonduran.circleci.extensions.observe
 import com.jonduran.circleci.key.KeyEntryFragment
 import com.jonduran.circleci.project.list.ProjectListFragment
 import com.jonduran.circleci.utils.exhaustive
 import javax.inject.Inject
 
-class MainActivity : InjectingActivity<ActivityMainBinding>() {
+class MainActivity : InjectingActivity() {
     @Inject lateinit var factory: MainViewModel.Factory
     private val viewModel by viewModels<MainViewModel> { factory }
-
-    override val inflateBinding: (LayoutInflater) -> ActivityMainBinding = ::inflate
+    private val binding by viewBinding(ActivityMainBinding::inflate)
 
     init {
         lifecycleScope.launchWhenStarted {
             viewModel.state.observe(this, ::render)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
     }
 
     private fun render(state: MainViewModel.State) {

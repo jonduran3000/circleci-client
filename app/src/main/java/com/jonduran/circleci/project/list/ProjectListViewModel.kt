@@ -47,8 +47,6 @@ class ProjectListViewModel(
             key: String,
             modelClass: Class<T>,
             handle: SavedStateHandle
-        ): T {
-            return ProjectListViewModel(handle, repository) as T
-        }
+        ) = ProjectListViewModel(handle, repository) as T
     }
 }

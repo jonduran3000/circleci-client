@@ -10,7 +10,7 @@ object Versions {
 }
 
 object Plugins {
-    const val ANDROID = "com.android.tools.build:gradle:4.0.0-alpha08"
+    const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta01"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}"
 }

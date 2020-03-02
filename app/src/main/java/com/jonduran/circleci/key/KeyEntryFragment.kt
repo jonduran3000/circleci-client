@@ -4,23 +4,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.jonduran.circleci.MainActivity
-import com.jonduran.circleci.common.ui.fragment.Inflate
-import com.jonduran.circleci.common.ui.fragment.InjectedFragment
+import com.jonduran.circleci.R
+import com.jonduran.circleci.common.ui.fragment.BaseFragment
+import com.jonduran.circleci.common.ui.utils.Injectable
+import com.jonduran.circleci.common.ui.utils.viewBinding
 import com.jonduran.circleci.databinding.FragmentKeyEntryBinding
-import com.jonduran.circleci.databinding.FragmentKeyEntryBinding.inflate
 import com.jonduran.circleci.extensions.float
 import com.jonduran.circleci.extensions.observe
 import com.jonduran.circleci.utils.exhaustive
 import javax.inject.Inject
 
-class KeyEntryFragment : InjectedFragment<FragmentKeyEntryBinding>() {
+class KeyEntryFragment : BaseFragment(R.layout.fragment_key_entry), Injectable {
     @Inject lateinit var factory: KeyEntryViewModel.Factory
     private val viewModel by viewModels<KeyEntryViewModel> { factory }
-
-    override val inflateBinding: Inflate<FragmentKeyEntryBinding>
-        get() = { inflater, container, attachToRoot ->
-            inflate(inflater, container, attachToRoot)
-        }
+    private val binding by viewBinding(FragmentKeyEntryBinding::bind)
 
     init {
         lifecycleScope.launchWhenStarted {

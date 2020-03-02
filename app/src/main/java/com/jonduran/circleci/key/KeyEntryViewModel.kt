@@ -76,8 +76,6 @@ class KeyEntryViewModel(
             key: String,
             modelClass: Class<T>,
             handle: SavedStateHandle
-        ): T {
-            return KeyEntryViewModel(handle, repository) as T
-        }
+        ) = KeyEntryViewModel(handle, repository) as T
     }
 }

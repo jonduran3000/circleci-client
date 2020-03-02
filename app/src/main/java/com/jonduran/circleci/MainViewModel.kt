@@ -48,8 +48,6 @@ class MainViewModel(
             key: String,
             modelClass: Class<T>,
             handle: SavedStateHandle
-        ): T {
-            return MainViewModel(handle, repository) as T
-        }
+        ) = MainViewModel(handle, repository) as T
     }
 }
