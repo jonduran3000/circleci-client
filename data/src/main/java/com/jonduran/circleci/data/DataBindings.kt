@@ -1,6 +1,6 @@
 package com.jonduran.circleci.data
 
-import com.jonduran.circleci.remote.Authorization
+import com.jonduran.circleci.remote.annotation.Authorization
 import dagger.Binds
 import dagger.Module
 import okhttp3.Interceptor

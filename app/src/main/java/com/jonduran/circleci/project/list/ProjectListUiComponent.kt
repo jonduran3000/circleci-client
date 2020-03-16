@@ -11,7 +11,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.snackbar.Snackbar
 import com.jonduran.circleci.R
 import com.jonduran.circleci.UiComponent
-import com.jonduran.circleci.cache.SourceControl
+import com.jonduran.circleci.cache.entity.SourceControl
 import com.jonduran.circleci.common.ui.list.BaseAdapter
 import com.jonduran.circleci.databinding.FragmentProjectListBinding
 import com.jonduran.circleci.extensions.float

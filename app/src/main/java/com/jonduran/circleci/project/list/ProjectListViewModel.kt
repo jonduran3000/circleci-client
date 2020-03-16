@@ -5,8 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import com.jonduran.circleci.cache.SourceControl
-import com.jonduran.circleci.data.ProjectRepository
+import com.jonduran.circleci.cache.entity.SourceControl
+import com.jonduran.circleci.data.project.ProjectRepository
 import com.jonduran.circleci.extensions.combineLatest
 import javax.inject.Inject
 

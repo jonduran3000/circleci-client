@@ -1,5 +1,5 @@
 object Versions {
-    const val KOTLIN = "1.3.60"
+    const val KOTLIN = "1.3.70"
     const val KOTLINX_COROUTINES = "1.3.2"
     const val DAGGER = "2.25.2"
     const val OKHTTP = "4.2.2"
@@ -7,6 +7,7 @@ object Versions {
     const val GLIDE = "4.10.0"
     const val ROOM = "2.2.3"
     const val ASSISTED_INJECT = "0.5.2"
+    const val JUNIT = "5.6.0"
 }
 
 object Plugins {
@@ -19,7 +20,7 @@ object Dependencies {
     const val KOTLIN_STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.KOTLIN}"
     const val KOTLINX_COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLINX_COROUTINES}"
     const val KOTLINX_COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.KOTLINX_COROUTINES}"
-    const val KOTLINX_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.13.0"
+    const val KOTLINX_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
     const val ANDROIDX_ACTIVITY = "androidx.activity:activity-ktx:1.1.0-beta01"
     const val ANDROIDX_ANNOTATION = "androidx.annotation:annotation:1.1.0"
     const val ANDROIDX_APPCOMPAT = "androidx.appcompat:appcompat:1.1.0"
@@ -34,7 +35,9 @@ object Dependencies {
     const val ANDROIDX_RECYCLERVIEW = "androidx.recyclerview:recyclerview:1.1.0"
     const val ANDROIDX_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03"
     const val ANDROIDX_SECURITY = "androidx.security:security-crypto:1.0.0-alpha02"
-    const val JUNIT = "junit:junit:4.12"
+    const val JUNIT = "org.junit.jupiter:junit-jupiter-api:${Versions.JUNIT}"
+    const val JUNIT_ENGINE = "org.junit.jupiter:junit-jupiter-engine:${Versions.JUNIT}"
+    const val JUNIT_PARAMS = "org.junit.jupiter:junit-jupiter-params:${Versions.JUNIT}"
     const val ANDROIDX_TEST_JUNIT = "androidx.test.ext:junit:1.1.0"
     const val ANDROIDX_TEST_ESPRESSO = "androidx.test.espresso:espresso-core:3.1.1"
     const val DAGGER = "com.google.dagger:dagger:${Versions.DAGGER}"
@@ -53,4 +56,7 @@ object Dependencies {
     const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
     const val MATERIAL = "com.google.android.material:material:1.2.0-alpha02"
+    const val THREETEN_ABP = "com.jakewharton.threetenabp:threetenabp:1.2.2"
+    const val THREETEN_BP = "org.threeten:threetenbp:1.4.1"
+    const val TRUTH = "androidx.test.ext:truth:1.2.0"
 }

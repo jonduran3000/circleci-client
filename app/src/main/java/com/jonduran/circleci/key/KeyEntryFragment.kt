@@ -1,5 +1,6 @@
 package com.jonduran.circleci.key
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -39,9 +40,10 @@ class KeyEntryFragment : BaseFragment(R.layout.fragment_key_entry), Injectable {
                 binding.keyLayout.error = "Please enter a valid API key"
             }
             is KeyEntryViewModel.State.Success -> {
-                (requireActivity() as MainActivity).goToProjectListScreen()
+                (requireActivity() as MainActivity).goToBuildListScreen()
             }
             is KeyEntryViewModel.State.Failure -> {
+                Log.e("KeyEntryFragment", "Error:", state.error)
                 Snackbar.make(binding.root, state.toString(), Snackbar.LENGTH_LONG).float()
             }
         }.exhaustive

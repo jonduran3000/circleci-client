@@ -45,6 +45,7 @@ dependencies {
     implementation(Dependencies.GLIDE)
     kapt(Dependencies.GLIDE_COMPILER)
     implementation(Dependencies.MATERIAL)
+    implementation(Dependencies.THREETEN_ABP)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_ESPRESSO)

@@ -17,12 +17,15 @@ android {
 
 dependencies {
     api(project(":cache"))
-    api(project(":remote"))
+    api(project(":remote")) {
+        exclude(group = "org.threeten", module = "threetenbp")
+    }
     implementation(Dependencies.KOTLIN_STDLIB)
     implementation(Dependencies.ANDROIDX_ANNOTATION)
     api(Dependencies.ANDROIDX_SECURITY)
     implementation(Dependencies.DAGGER)
     kapt(Dependencies.DAGGER_COMPILER)
+    implementation(Dependencies.THREETEN_ABP)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_ROOM_TESTING)

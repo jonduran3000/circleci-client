@@ -1,9 +1,11 @@
 package com.jonduran.circleci.remote
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.jonduran.circleci.remote.annotation.Authorization
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
+import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.Interceptor
@@ -28,6 +30,7 @@ object RemoteModule {
             .build()
     }
 
+    @UnstableDefault
     @Provides
     @Singleton
     fun providesApi(client: Lazy<OkHttpClient>): CircleCiApi {

@@ -22,6 +22,7 @@ dependencies {
     kapt(Dependencies.ANDROIDX_ROOM_COMPILER)
     implementation(Dependencies.DAGGER)
     kapt(Dependencies.DAGGER_COMPILER)
+    implementation(Dependencies.THREETEN_ABP)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_ROOM_TESTING)

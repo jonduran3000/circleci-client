@@ -7,6 +7,7 @@ import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionSche
 import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
 import androidx.security.crypto.MasterKeys
 import com.jonduran.circleci.cache.CacheModule
+import com.jonduran.circleci.data.utils.checkBackgroundThread
 import com.jonduran.circleci.remote.RemoteModule
 import dagger.Module
 import dagger.Provides

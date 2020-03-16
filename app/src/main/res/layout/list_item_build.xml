@@ -1,7 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/subjectLabel"
+        tools:srcCompat="@android:color/darker_gray"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/subjectLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:textAppearance="?textAppearanceSubtitle1"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/slug"
+        tools:text="Initial commit"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/slug"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textAppearance="?textAppearanceSubtitle2"
+        app:layout_constraintStart_toStartOf="@id/subjectLabel"
+        app:layout_constraintEnd_toEndOf="@id/subjectLabel"
+        app:layout_constraintTop_toBottomOf="@id/subjectLabel"
+        app:layout_constraintBottom_toTopOf="@id/revision"
+        tools:text="jonduran3000/circleci-client"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/revision"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textAppearance="?textAppearanceCaption"
+        app:layout_constraintStart_toStartOf="@id/subjectLabel"
+        app:layout_constraintEnd_toStartOf="@id/durationLabel"
+        app:layout_constraintTop_toBottomOf="@id/slug"
+        app:layout_constraintBottom_toTopOf="@id/branchLabel"
+        tools:text="93e4b4b"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/durationLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceCaption"
+        app:layout_constraintStart_toEndOf="@id/revision"
+        app:layout_constraintEnd_toEndOf="@id/subjectLabel"
+        app:layout_constraintTop_toBottomOf="@id/slug"
+        tools:text="1m 30s"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/branchLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:textAppearance="?textAppearanceCaption"
+        app:layout_constraintStart_toStartOf="@id/subjectLabel"
+        app:layout_constraintEnd_toStartOf="@id/startTimeLabel"
+        app:layout_constraintTop_toBottomOf="@id/revision"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="master"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/startTimeLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceCaption"
+        app:layout_constraintStart_toEndOf="@id/branchLabel"
+        app:layout_constraintEnd_toEndOf="@id/subjectLabel"
+        app:layout_constraintTop_toBottomOf="@id/revision"
+        tools:text="35 min ago"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
