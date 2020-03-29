@@ -5,8 +5,8 @@ import com.jonduran.circleci.remote.annotation.Authorization
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import okhttp3.Call
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -30,13 +30,16 @@ object RemoteModule {
             .build()
     }
 
-    @UnstableDefault
     @Provides
     @Singleton
     fun providesApi(client: Lazy<OkHttpClient>): CircleCiApi {
-        val json = Json.nonstrict
-        val contentType = "application/json".toMediaType()
-        val factory = json.asConverterFactory(contentType)
+        val config = JsonConfiguration.Stable.copy(
+            isLenient = true,
+            ignoreUnknownKeys = true,
+            serializeSpecialFloatingPointValues = true,
+            useArrayPolymorphism = true
+        )
+        val factory = Json(config).asConverterFactory("application/json".toMediaType())
 
         return Retrofit.Builder()
             .baseUrl("https://circleci.com/api/v1.1/")

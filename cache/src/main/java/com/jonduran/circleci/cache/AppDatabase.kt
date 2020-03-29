@@ -7,8 +7,15 @@ import com.jonduran.circleci.cache.dao.BuildDao
 import com.jonduran.circleci.cache.dao.ProjectDao
 import com.jonduran.circleci.cache.entity.BuildEntity
 import com.jonduran.circleci.cache.entity.ProjectEntity
+import com.jonduran.circleci.cache.entity.WorkflowEntity
 
-@Database(entities = [BuildEntity::class, ProjectEntity::class], version = 1)
+@Database(
+    entities = [
+        BuildEntity::class,
+        ProjectEntity::class,
+        WorkflowEntity::class
+    ], version = 1
+)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun buildDao(): BuildDao

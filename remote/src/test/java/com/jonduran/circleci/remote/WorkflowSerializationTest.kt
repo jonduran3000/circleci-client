@@ -3,21 +3,29 @@ package com.jonduran.circleci.remote
 import com.google.common.truth.Truth.assertThat
 import com.jonduran.circleci.remote.model.Workflow
 import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.stringify
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-@UnstableDefault
 @ImplicitReflectionSerializer
 class WorkflowSerializationTest {
+    companion object {
+        private val JSON = Json(
+            JsonConfiguration.Stable.copy(
+                prettyPrint = true,
+                useArrayPolymorphism = true
+            )
+        )
+    }
+
     @Test
     @DisplayName("Serialize Workflow object into JSON")
     fun workflowSerialization() {
         val workflow = TestWorkflowFactory.create()
 
-        val actual = Json.indented.stringify(workflow)
+        val actual = JSON.stringify(workflow)
 
         val expected = """
             {
@@ -45,7 +53,7 @@ class WorkflowSerializationTest {
             }
             """.trimIndent()
 
-        val actual = Json.indented.parse(Workflow.serializer(), json)
+        val actual = JSON.parse(Workflow.serializer(), json)
 
         assertThat(actual).isEqualTo(expected)
     }

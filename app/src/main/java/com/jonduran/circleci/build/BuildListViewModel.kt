@@ -16,8 +16,8 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
-import org.threeten.bp.Duration
-import org.threeten.bp.temporal.ChronoUnit.MILLIS
+import java.time.Duration
+import java.time.temporal.ChronoUnit.MILLIS
 import javax.inject.Inject
 
 class BuildListViewModel(

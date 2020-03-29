@@ -3,8 +3,8 @@ package com.jonduran.circleci.cache
 import androidx.room.TypeConverter
 import com.jonduran.circleci.cache.entity.SourceControl
 import com.jonduran.circleci.cache.entity.Status
-import org.threeten.bp.Instant
-import org.threeten.bp.format.DateTimeFormatter.ISO_INSTANT
+import java.time.Instant
+import java.time.format.DateTimeFormatter.ISO_INSTANT
 import java.util.UUID
 
 class Converters {

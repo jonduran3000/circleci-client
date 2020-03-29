@@ -21,7 +21,7 @@ class RemoteBuildDataSource @Inject constructor(private val api: CircleCiApi) : 
                 queuedAt = build.queuedAt,
                 startTime = build.startTime,
                 stopTime = build.stopTime,
-                buildTimeInMillis = build.buildTimeInMillis,
+                buildTimeInMillis = build.buildTimeInMillis ?: 0L,
                 jobId = build.workflow.jobId,
                 jobName = build.workflow.jobName,
                 workflowId = build.workflow.workflowId,

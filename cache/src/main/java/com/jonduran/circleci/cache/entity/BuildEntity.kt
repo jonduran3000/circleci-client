@@ -2,7 +2,7 @@ package com.jonduran.circleci.cache.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.threeten.bp.Instant
+import java.time.Instant
 import java.util.UUID
 
 @Entity

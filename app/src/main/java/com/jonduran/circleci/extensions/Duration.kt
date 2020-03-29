@@ -1,6 +1,6 @@
 package com.jonduran.circleci.extensions
 
-import org.threeten.bp.Duration
+import java.time.Duration
 
 fun Duration.prettyPrint(): String {
     val builder = StringBuilder()

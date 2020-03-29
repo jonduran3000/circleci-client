@@ -3,19 +3,28 @@ package com.jonduran.circleci.remote
 import com.google.common.truth.Truth.assertThat
 import com.jonduran.circleci.remote.model.Build
 import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.stringify
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.threeten.bp.Duration
-import org.threeten.bp.Instant
-import org.threeten.bp.format.DateTimeFormatter
+import java.time.Duration
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
-@UnstableDefault
 @ImplicitReflectionSerializer
 class BuildSerializationTest {
+
+    companion object {
+        private val JSON = Json(
+            JsonConfiguration.Stable.copy(
+                prettyPrint = true,
+                useArrayPolymorphism = true
+            )
+        )
+    }
+
 
     @Test
     @DisplayName("Serialize Build object into JSON")
@@ -54,7 +63,7 @@ class BuildSerializationTest {
             user = user
         )
 
-        val actual = Json.indented.stringify(build)
+        val actual = JSON.stringify(build)
 
         val expected = """
             {
@@ -154,7 +163,7 @@ class BuildSerializationTest {
             }
             """.trimIndent()
 
-        val actual = Json.indented.parse(Build.serializer(), json)
+        val actual = JSON.parse(Build.serializer(), json)
 
         assertThat(actual).isEqualTo(expected)
     }

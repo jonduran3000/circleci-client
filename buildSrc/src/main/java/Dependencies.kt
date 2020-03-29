@@ -11,7 +11,7 @@ object Versions {
 }
 
 object Plugins {
-    const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta01"
+    const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta03"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}"
 }
@@ -59,4 +59,5 @@ object Dependencies {
     const val THREETEN_ABP = "com.jakewharton.threetenabp:threetenabp:1.2.2"
     const val THREETEN_BP = "org.threeten:threetenbp:1.4.1"
     const val TRUTH = "androidx.test.ext:truth:1.2.0"
+    const val JAVA_CORE_LIBS = "com.android.tools:desugar_jdk_libs:1.0.5"
 }

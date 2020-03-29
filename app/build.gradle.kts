@@ -19,6 +19,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
@@ -45,7 +48,7 @@ dependencies {
     implementation(Dependencies.GLIDE)
     kapt(Dependencies.GLIDE_COMPILER)
     implementation(Dependencies.MATERIAL)
-    implementation(Dependencies.THREETEN_ABP)
+    coreLibraryDesugaring(Dependencies.JAVA_CORE_LIBS)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_ESPRESSO)

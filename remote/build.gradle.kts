@@ -15,7 +15,6 @@ dependencies {
     api(Dependencies.OKHTTP_LOGGING)
     api(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_SERIALIZATION_CONVERTER)
-    implementation(Dependencies.THREETEN_BP)
     testImplementation(Dependencies.JUNIT)
     testRuntimeOnly(Dependencies.JUNIT_ENGINE)
     testImplementation(Dependencies.JUNIT_PARAMS)
