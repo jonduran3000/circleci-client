@@ -5,27 +5,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jonduran.circleci.cache.entity.BuildEntity
-import com.jonduran.circleci.cache.entity.WorkflowEntity
+import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 @Dao
 interface BuildDao {
     @Query("""
-        SELECT 
-            workflowId AS id, 
-            workflowName AS name, 
-            SUM(buildTimeInMillis) AS totalBuildTimeInMillis 
-        FROM 
-            BuildEntity 
-        GROUP BY 
-            workflowId;
-    """)
-    suspend fun getWorkflows(): List<WorkflowEntity>
-
-    @Query("""
         SELECT * FROM BuildEntity ORDER BY queuedAt DESC;
     """)
-    suspend fun getBuilds(): List<BuildEntity>
+    fun getBuilds(): Flow<List<BuildEntity>>
 
     @Query("""
         SELECT * FROM BuildEntity WHERE workflowId = :id ORDER BY queuedAt DESC;

@@ -27,6 +27,7 @@ dependencies {
     implementation(Dependencies.DAGGER)
     kapt(Dependencies.DAGGER_COMPILER)
     coreLibraryDesugaring(Dependencies.JAVA_CORE_LIBS)
+    implementation(Dependencies.STORE)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_ROOM_TESTING)

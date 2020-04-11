@@ -60,4 +60,5 @@ object Dependencies {
     const val THREETEN_BP = "org.threeten:threetenbp:1.4.1"
     const val TRUTH = "androidx.test.ext:truth:1.2.0"
     const val JAVA_CORE_LIBS = "com.android.tools:desugar_jdk_libs:1.0.5"
+    const val STORE = "com.dropbox.mobile.store:store4:4.0.0-alpha03"
 }

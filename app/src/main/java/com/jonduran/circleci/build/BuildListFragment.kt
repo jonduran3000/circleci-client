@@ -10,18 +10,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jonduran.circleci.R
 import com.jonduran.circleci.common.ui.list.BaseAdapter
 import com.jonduran.circleci.common.ui.list.Item
-import com.jonduran.circleci.common.ui.utils.Injectable
 import com.jonduran.circleci.common.ui.utils.viewBinding
 import com.jonduran.circleci.databinding.FragmentBuildListBinding
 import com.jonduran.circleci.utils.exhaustive
+import com.jonduran.circleci.viewmodel.InjectedViewModelFactory
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class BuildListFragment : Fragment(R.layout.fragment_build_list), Injectable {
-    @Inject lateinit var factory: BuildListViewModel.Factory
-    private val viewModel by viewModels<BuildListViewModel> { factory }
+class BuildListFragment @Inject constructor(
+    private val factoryProducer: InjectedViewModelFactory.Producer
+) : Fragment(R.layout.fragment_build_list) {
+    private val viewModel by viewModels<BuildListViewModel> {
+        factoryProducer.produce(this, arguments)
+    }
     private val binding by viewBinding(FragmentBuildListBinding::bind)
     private val adapter = BaseAdapter<Item>()
 
@@ -31,12 +33,9 @@ class BuildListFragment : Fragment(R.layout.fragment_build_list), Injectable {
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
         }
-        lifecycleScope.launch {
-            viewModel.state()
-                .onEach { state -> render(state) }
-                .launchIn(this)
-        }
-        viewModel.getRecentBuilds()
+        viewModel.state
+            .onEach { state -> render(state) }
+            .launchIn(lifecycleScope)
     }
 
     private fun render(state: BuildListViewModel.State) {
@@ -47,7 +46,7 @@ class BuildListFragment : Fragment(R.layout.fragment_build_list), Injectable {
                 adapter.submitList(state.builds)
             }
             is BuildListViewModel.State.Failure -> {
-                Log.e("BuildListFragment", "Error:", state.error)
+                val log = Log.e("BuildListFragment", "Error:", state.error)
             }
         }.exhaustive
     }

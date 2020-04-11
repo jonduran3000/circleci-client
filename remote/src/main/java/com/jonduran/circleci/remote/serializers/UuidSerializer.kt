@@ -8,8 +8,8 @@ import java.util.UUID
 
 @Serializer(forClass = UUID::class)
 object UuidSerializer : KSerializer<UUID> {
-    override fun serialize(encoder: Encoder, obj: UUID) {
-        encoder.encodeString(obj.toString())
+    override fun serialize(encoder: Encoder, value: UUID) {
+        encoder.encodeString(value.toString())
     }
 
     override fun deserialize(decoder: Decoder): UUID {

@@ -1,19 +1,33 @@
 package com.jonduran.circleci
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import com.jonduran.circleci.build.BuildListFragment
+import com.jonduran.circleci.common.ui.fragment.FragmentKey
+import com.jonduran.circleci.common.ui.fragment.InjectedFragmentFactory
 import com.jonduran.circleci.key.KeyEntryFragment
 import com.jonduran.circleci.project.list.ProjectListFragment
+import dagger.Binds
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.IntoMap
 
 @Module
 abstract class FragmentBindings {
-    @ContributesAndroidInjector
-    abstract fun keyEntryFragment(): KeyEntryFragment
+    @Binds
+    @IntoMap
+    @FragmentKey(KeyEntryFragment::class)
+    abstract fun bindKeyEntry(fragment: KeyEntryFragment): Fragment
 
-    @ContributesAndroidInjector
-    abstract fun projectListFragment(): ProjectListFragment
+    @Binds
+    @IntoMap
+    @FragmentKey(ProjectListFragment::class)
+    abstract fun bindProjectList(fragment: ProjectListFragment): Fragment
 
-    @ContributesAndroidInjector
-    abstract fun buildListFragment(): BuildListFragment
+    @Binds
+    @IntoMap
+    @FragmentKey(BuildListFragment::class)
+    abstract fun bindBuildList(fragment: BuildListFragment): Fragment
+
+    @Binds
+    abstract fun bindFactory(factory: InjectedFragmentFactory): FragmentFactory
 }

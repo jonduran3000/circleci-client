@@ -28,6 +28,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":common:ui"))
     implementation(project(":common:utils"))
+    implementation(project(":common:viewmodel"))
     implementation(Dependencies.KOTLIN_STDLIB)
     implementation(Dependencies.ANDROIDX_ACTIVITY)
     implementation(Dependencies.ANDROIDX_APPCOMPAT)

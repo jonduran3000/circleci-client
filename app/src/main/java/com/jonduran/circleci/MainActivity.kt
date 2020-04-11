@@ -13,11 +13,14 @@ import com.jonduran.circleci.extensions.observe
 import com.jonduran.circleci.key.KeyEntryFragment
 import com.jonduran.circleci.project.list.ProjectListFragment
 import com.jonduran.circleci.utils.exhaustive
+import com.jonduran.circleci.viewmodel.InjectedViewModelFactory
 import javax.inject.Inject
 
 class MainActivity : InjectingActivity() {
-    @Inject lateinit var factory: MainViewModel.Factory
-    private val viewModel by viewModels<MainViewModel> { factory }
+    @Inject lateinit var factoryProducer: InjectedViewModelFactory.Producer
+    private val viewModel by viewModels<MainViewModel> {
+        factoryProducer.produce(this, intent.extras)
+    }
     private val binding by viewBinding(ActivityMainBinding::inflate)
 
     init {
@@ -44,19 +47,19 @@ class MainActivity : InjectingActivity() {
 
     fun goToKeyEntryScreen() {
         supportFragmentManager.commit {
-            replace(R.id.content, KeyEntryFragment())
+            replace(R.id.content, KeyEntryFragment::class.java, null)
         }
     }
 
     fun goToProjectListScreen() {
         supportFragmentManager.commit {
-            replace(R.id.content, ProjectListFragment())
+            replace(R.id.content, ProjectListFragment::class.java, null)
         }
     }
 
     fun goToBuildListScreen() {
         supportFragmentManager.commit {
-            replace(R.id.content, BuildListFragment())
+            replace(R.id.content, BuildListFragment::class.java, null)
         }
     }
 }

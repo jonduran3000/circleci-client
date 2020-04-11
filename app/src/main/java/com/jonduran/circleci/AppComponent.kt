@@ -12,8 +12,10 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         ActivityBindings::class,
+        AssistedBindings::class,
         FragmentBindings::class,
-        DataModule::class
+        DataModule::class,
+        ViewModelBindings::class
     ]
 )
 interface AppComponent {

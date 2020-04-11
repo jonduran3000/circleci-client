@@ -7,17 +7,20 @@ import com.google.android.material.snackbar.Snackbar
 import com.jonduran.circleci.MainActivity
 import com.jonduran.circleci.R
 import com.jonduran.circleci.common.ui.fragment.BaseFragment
-import com.jonduran.circleci.common.ui.utils.Injectable
 import com.jonduran.circleci.common.ui.utils.viewBinding
 import com.jonduran.circleci.databinding.FragmentKeyEntryBinding
 import com.jonduran.circleci.extensions.float
 import com.jonduran.circleci.extensions.observe
 import com.jonduran.circleci.utils.exhaustive
+import com.jonduran.circleci.viewmodel.InjectedViewModelFactory
 import javax.inject.Inject
 
-class KeyEntryFragment : BaseFragment(R.layout.fragment_key_entry), Injectable {
-    @Inject lateinit var factory: KeyEntryViewModel.Factory
-    private val viewModel by viewModels<KeyEntryViewModel> { factory }
+class KeyEntryFragment @Inject constructor(
+    private val factoryProducer: InjectedViewModelFactory.Producer
+) : BaseFragment(R.layout.fragment_key_entry) {
+    private val viewModel by viewModels<KeyEntryViewModel> {
+        factoryProducer.produce(this, arguments)
+    }
     private val binding by viewBinding(FragmentKeyEntryBinding::bind)
 
     init {

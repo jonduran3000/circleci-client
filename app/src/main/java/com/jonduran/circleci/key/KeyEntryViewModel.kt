@@ -1,20 +1,21 @@
 package com.jonduran.circleci.key
 
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jonduran.circleci.data.user.UserRepository
 import com.jonduran.circleci.extensions.safeOffer
+import com.jonduran.circleci.viewmodel.AssistedProvider
+import com.squareup.inject.assisted.Assisted
+import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import javax.inject.Inject
 
-class KeyEntryViewModel(
-    savedState: SavedStateHandle,
+class KeyEntryViewModel @AssistedInject constructor(
+    @Assisted savedState: SavedStateHandle,
     private val userRepository: UserRepository
 ) : ViewModel() {
     private val _state = ConflatedBroadcastChannel<State>()
@@ -67,15 +68,8 @@ class KeyEntryViewModel(
         data class Failure(val error: Throwable) : State()
     }
 
-    class Factory @Inject constructor(
-        fragment: KeyEntryFragment,
-        private val repository: UserRepository
-    ) : AbstractSavedStateViewModelFactory(fragment, fragment.arguments) {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(
-            key: String,
-            modelClass: Class<T>,
-            handle: SavedStateHandle
-        ) = KeyEntryViewModel(handle, repository) as T
+    @AssistedInject.Factory
+    interface Provider : AssistedProvider<KeyEntryViewModel> {
+        override fun provide(savedState: SavedStateHandle): KeyEntryViewModel
     }
 }

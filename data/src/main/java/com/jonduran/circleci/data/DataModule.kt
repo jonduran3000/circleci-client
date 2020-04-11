@@ -6,11 +6,13 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV
 import androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
 import androidx.security.crypto.MasterKeys
+import com.dropbox.android.external.store4.MemoryPolicy
 import com.jonduran.circleci.cache.CacheModule
 import com.jonduran.circleci.data.utils.checkBackgroundThread
 import com.jonduran.circleci.remote.RemoteModule
 import dagger.Module
 import dagger.Provides
+import java.util.concurrent.TimeUnit
 
 @Module(includes = [CacheModule::class, DataBindings::class, RemoteModule::class])
 object DataModule {
@@ -26,4 +28,13 @@ object DataModule {
             AES256_GCM
         )
     }
+
+    @Provides
+    fun provideMemoryPolicy(): MemoryPolicy {
+        return MemoryPolicy.builder()
+            .setExpireAfterAccess(5)
+            .setExpireAfterTimeUnit(TimeUnit.MINUTES)
+            .build()
+    }
+
 }

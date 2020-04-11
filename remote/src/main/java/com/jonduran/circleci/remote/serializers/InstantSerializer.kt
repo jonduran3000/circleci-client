@@ -9,8 +9,8 @@ import java.time.format.DateTimeFormatter
 
 @Serializer(forClass = Instant::class)
 object InstantSerializer : KSerializer<Instant> {
-    override fun serialize(encoder: Encoder, obj: Instant) {
-        encoder.encodeString(DateTimeFormatter.ISO_INSTANT.format(obj))
+    override fun serialize(encoder: Encoder, value: Instant) {
+        encoder.encodeString(DateTimeFormatter.ISO_INSTANT.format(value))
     }
 
     override fun deserialize(decoder: Decoder): Instant {

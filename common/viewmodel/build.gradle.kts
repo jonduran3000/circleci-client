@@ -22,6 +22,8 @@ dependencies {
     implementation(Dependencies.ANDROIDX_VIEWMODEL_SAVEDSTATE)
     implementation(Dependencies.DAGGER)
     kapt(Dependencies.DAGGER_COMPILER)
+    implementation(Dependencies.ASSISTED_INJECT)
+    kapt(Dependencies.ASSISTED_INJECT_COMPILER)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_JUNIT)
 }
