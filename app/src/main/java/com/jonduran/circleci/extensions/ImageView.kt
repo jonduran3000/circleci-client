@@ -1,13 +1,10 @@
 package com.jonduran.circleci.extensions
 
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.jonduran.circleci.R
+import com.bumptech.glide.RequestBuilder
 
-fun ImageView.load(url: String) {
-    Glide.with(this)
-        .load(url)
-        .transform(RoundedCorners(resources.getDimensionPixelSize(R.dimen.image_corner_radius)))
-        .into(this)
+fun ImageView.load(url: String, builder: RequestBuilder<Drawable>.() -> RequestBuilder<Drawable>) {
+    Glide.with(this).load(url).builder().into(this)
 }

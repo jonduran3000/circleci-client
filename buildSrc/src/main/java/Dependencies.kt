@@ -1,6 +1,6 @@
 object Versions {
-    const val KOTLIN = "1.3.70"
-    const val KOTLINX_COROUTINES = "1.3.2"
+    const val KOTLIN = "1.3.72"
+    const val KOTLINX_COROUTINES = "1.3.6"
     const val DAGGER = "2.25.2"
     const val OKHTTP = "4.2.2"
     const val RETROFIT = "2.6.1"
@@ -11,7 +11,7 @@ object Versions {
 }
 
 object Plugins {
-    const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta03"
+    const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta05"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}"
 }

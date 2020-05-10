@@ -10,21 +10,27 @@ import com.google.android.material.snackbar.Snackbar
 import com.jonduran.circleci.R
 
 fun Snackbar.float() {
-    // Update the background
+    updateBackground()
+    updateMargins()
+    elevate()
+    show()
+}
+
+private fun Snackbar.updateBackground() {
     val model = ShapeAppearanceModel
         .builder(context, R.style.ShapeAppearance_Stable_Snackbar, 0)
         .build()
-    val background = MaterialShapeDrawable(model)
-    view.background = background
+    view.background = MaterialShapeDrawable(model)
+}
 
-    // Update the margins
+private fun Snackbar.updateMargins() {
+    val margin = view.resources.getDimensionPixelSize(R.dimen.snackbar_margin)
     view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-        val margin = view.resources.getDimensionPixelSize(R.dimen.snackbar_margin)
         updateMarginsRelative(margin, margin, margin, margin)
     }
+}
 
-    // Update the elevation
+private fun Snackbar.elevate() {
     val elevation = view.resources.getDimension(R.dimen.snackbar_elevation)
     ViewCompat.setElevation(view, elevation)
-    show()
 }

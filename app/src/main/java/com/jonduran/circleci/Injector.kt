@@ -15,8 +15,8 @@ import dagger.android.support.AndroidSupportInjection
 object Injector {
     fun inject(app: CircleCiApp) {
         val component = DaggerAppComponent.factory().create(app).apply { inject(app) }
-        val callbacks = InjectingActivityLifecycleCallbacks()
-        app.registerActivityLifecycleCallbacks(callbacks)
+        //val callbacks = InjectingActivityLifecycleCallbacks()
+        //app.registerActivityLifecycleCallbacks(callbacks)
     }
 
     private class InjectingActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {

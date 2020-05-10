@@ -8,13 +8,13 @@ import com.jonduran.circleci.cache.AppDatabase
 import com.jonduran.circleci.cache.entity.BuildEntity
 import com.jonduran.circleci.cache.entity.Status
 import com.jonduran.circleci.data.DataSource
-import com.jonduran.circleci.remote.CircleCiApi
+import com.jonduran.circleci.remote.CircleCiV1Api
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class BuildDataSource @Inject constructor(
-    api: CircleCiApi,
+    api: CircleCiV1Api,
     database: AppDatabase
 ) : DataSource<Unit, List<BuildEntity>> {
     private val store = StoreBuilder.fromNonFlow<Unit, List<BuildEntity>> {

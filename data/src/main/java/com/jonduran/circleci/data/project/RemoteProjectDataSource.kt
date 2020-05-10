@@ -2,11 +2,11 @@ package com.jonduran.circleci.data.project
 
 import com.jonduran.circleci.cache.entity.ProjectEntity
 import com.jonduran.circleci.cache.entity.SourceControl
-import com.jonduran.circleci.remote.CircleCiApi
+import com.jonduran.circleci.remote.CircleCiV1Api
 import javax.inject.Inject
 
 class RemoteProjectDataSource @Inject constructor(
-    private val api: CircleCiApi
+    private val api: CircleCiV1Api
 ) : ProjectDataSource {
     override suspend fun getListOfProjects(
         sourceControl: Array<SourceControl>,

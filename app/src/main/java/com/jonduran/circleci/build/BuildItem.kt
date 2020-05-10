@@ -1,5 +1,6 @@
 package com.jonduran.circleci.build
 
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.jonduran.circleci.R
 import com.jonduran.circleci.common.android.LayoutResource
 import com.jonduran.circleci.common.ui.list.BaseViewHolder
@@ -24,7 +25,11 @@ data class BuildItem(
 
     override fun bind(holder: BaseViewHolder, payloads: MutableList<Any>?) {
         with(ListItemBuildBinding.bind(holder.itemView)) {
-            avatar.load(avatarUrl)
+            avatar.load(avatarUrl) {
+                val resources = holder.itemView.resources
+                val radius = resources.getDimensionPixelSize(R.dimen.image_corner_radius)
+                transform(RoundedCorners(radius))
+            }
             subjectLabel.text = subject
             slug.text = "$username/$reponame"
             revision.text = gitSha

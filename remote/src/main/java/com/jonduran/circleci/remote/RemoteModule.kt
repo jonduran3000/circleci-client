@@ -32,7 +32,7 @@ object RemoteModule {
 
     @Provides
     @Singleton
-    fun providesApi(client: Lazy<OkHttpClient>): CircleCiApi {
+    fun providesApi(client: Lazy<OkHttpClient>): CircleCiV1Api {
         val config = JsonConfiguration.Stable.copy(
             isLenient = true,
             ignoreUnknownKeys = true,

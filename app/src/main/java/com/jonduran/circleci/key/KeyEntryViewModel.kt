@@ -4,13 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jonduran.circleci.data.user.UserRepository
-import com.jonduran.circleci.extensions.safeOffer
 import com.jonduran.circleci.viewmodel.AssistedProvider
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
@@ -18,8 +16,8 @@ class KeyEntryViewModel @AssistedInject constructor(
     @Assisted savedState: SavedStateHandle,
     private val userRepository: UserRepository
 ) : ViewModel() {
-    private val _state = ConflatedBroadcastChannel<State>()
-    val state: Flow<State> = _state.asFlow()
+    private val _state = MutableStateFlow<State>(State.Uninitialized)
+    val state: StateFlow<State> get() = _state
 
     fun process(action: Action) {
         when (action) {
@@ -31,7 +29,7 @@ class KeyEntryViewModel @AssistedInject constructor(
         viewModelScope.launch {
             val key = action.key
             if (key.isNullOrEmpty()) {
-                _state.safeOffer(State.EmptyKey)
+                _state.value = State.EmptyKey
             } else {
                 storeApiKey(key)
             }
@@ -42,7 +40,7 @@ class KeyEntryViewModel @AssistedInject constructor(
         try {
             userRepository.storeKey(key.toString())
             userRepository.getCurrentUser()
-            _state.safeOffer(State.Success)
+            _state.value = State.Success
         } catch (e: Exception) {
             checkForUnauthorizedError(e)
         }
@@ -50,10 +48,10 @@ class KeyEntryViewModel @AssistedInject constructor(
 
     private suspend fun checkForUnauthorizedError(e: Exception) {
         userRepository.deleteKey()
-        if (e is HttpException && e.code() == 401) {
-            _state.safeOffer(State.InvalidKey)
+        _state.value = if (e is HttpException && e.code() == 401) {
+            State.InvalidKey
         } else {
-            _state.safeOffer(State.Failure(e))
+            State.Failure(e)
         }
     }
 
@@ -62,6 +60,7 @@ class KeyEntryViewModel @AssistedInject constructor(
     }
 
     sealed class State {
+        object Uninitialized : State()
         object EmptyKey : State()
         object InvalidKey : State()
         object Success : State()

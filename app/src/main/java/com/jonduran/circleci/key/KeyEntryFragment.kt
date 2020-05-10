@@ -49,6 +49,7 @@ class KeyEntryFragment @Inject constructor(
                 Log.e("KeyEntryFragment", "Error:", state.error)
                 Snackbar.make(binding.root, state.toString(), Snackbar.LENGTH_LONG).float()
             }
+            KeyEntryViewModel.State.Uninitialized -> {}
         }.exhaustive
     }
 }

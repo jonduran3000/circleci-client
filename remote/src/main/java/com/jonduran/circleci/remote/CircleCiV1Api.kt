@@ -6,7 +6,7 @@ import com.jonduran.circleci.remote.model.User
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface CircleCiApi {
+interface CircleCiV1Api {
     @GET("me")
     suspend fun getUser(): User
 
