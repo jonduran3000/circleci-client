@@ -33,6 +33,6 @@ class ProjectListFragment @Inject constructor(
             onOrganizationChange = { org -> viewModel.organization.setValue(org) }
         )
 
-        viewModel.state.observe(this, uiComponent::render)
+        viewModel.state.observe(viewLifecycleOwner, uiComponent::render)
     }
 }
