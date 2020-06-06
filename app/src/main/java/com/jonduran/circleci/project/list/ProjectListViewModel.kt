@@ -25,7 +25,7 @@ class ProjectListViewModel @AssistedInject constructor(
         .switchMap { (vcs, org) -> getProjectsLiveData(vcs, org) }
 
     private fun getProjectsLiveData(vcs: Array<SourceControl>, org: String) = liveData {
-        emit(ProjectListUiComponent.State.Loading)
+        emit(State.Loading)
         try {
             val projects = repository.getListOfProjects(vcs, org).map { entity ->
                 ProjectItem(
@@ -33,9 +33,9 @@ class ProjectListViewModel @AssistedInject constructor(
                     username = entity.username
                 )
             }
-            emit(ProjectListUiComponent.State.Success(projects))
+            emit(State.Success(projects))
         } catch (e: Exception) {
-            emit(ProjectListUiComponent.State.Failure(e))
+            emit(State.Failure(e))
         }
     }
 

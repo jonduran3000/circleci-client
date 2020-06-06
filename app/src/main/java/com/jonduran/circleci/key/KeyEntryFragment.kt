@@ -2,8 +2,6 @@ package com.jonduran.circleci.key
 
 import android.util.Log
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import com.jonduran.circleci.MainActivity
 import com.jonduran.circleci.R
@@ -11,6 +9,7 @@ import com.jonduran.circleci.common.ui.fragment.BaseFragment
 import com.jonduran.circleci.common.ui.utils.viewBinding
 import com.jonduran.circleci.databinding.FragmentKeyEntryBinding
 import com.jonduran.circleci.extensions.float
+import com.jonduran.circleci.extensions.launchWhenViewCreated
 import com.jonduran.circleci.extensions.observe
 import com.jonduran.circleci.utils.exhaustive
 import com.jonduran.circleci.viewmodel.InjectedViewModelFactory
@@ -25,15 +24,13 @@ class KeyEntryFragment @Inject constructor(
     private val binding by viewBinding(FragmentKeyEntryBinding::bind)
 
     init {
-        viewLifecycleOwnerLiveData.observe(this) { owner ->
-            owner.lifecycleScope.launchWhenCreated {
-                binding.submitButton.setOnClickListener {
-                    val text = binding.keyInput.text
-                    val action = KeyEntryViewModel.Action.OnSubmitClicked(text)
-                    viewModel.process(action)
-                }
-                viewModel.state.observe(this, ::render)
+        launchWhenViewCreated {
+            binding.submitButton.setOnClickListener {
+                val text = binding.keyInput.text
+                val action = KeyEntryViewModel.Action.OnSubmitClicked(text)
+                viewModel.process(action)
             }
+            viewModel.state.observe(this, ::render)
         }
     }
 

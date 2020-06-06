@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.jonduran.circleci.R
 import com.jonduran.circleci.common.ui.fragment.BaseFragment
-import com.jonduran.circleci.common.ui.utils.autoCleared
 import com.jonduran.circleci.common.ui.utils.viewBinding
 import com.jonduran.circleci.databinding.FragmentProjectListBinding
 import com.jonduran.circleci.viewmodel.InjectedViewModelFactory
@@ -20,19 +19,17 @@ class ProjectListFragment @Inject constructor(
         factoryProducer.produce(this, arguments)
     }
     private val binding by viewBinding(FragmentProjectListBinding::bind)
-    private var uiComponent by autoCleared<ProjectListUiComponent>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         (requireActivity() as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
-        uiComponent = ProjectListUiComponent(
-            binding = binding,
+        binding.setUp(
             onVersionControlChange = { vcs -> viewModel.versionControl.setValue(vcs) },
             onOrganizationChange = { org -> viewModel.organization.setValue(org) }
         )
 
-        viewModel.state.observe(viewLifecycleOwner, uiComponent::render)
+        viewModel.state.observe(viewLifecycleOwner, binding::render)
     }
 }
