@@ -30,6 +30,7 @@ class BuildPlugin : Plugin<Project> {
                 }
             }
         }
+        target.configureKotlin()
     }
 
     private fun AppExtension.configure() {
@@ -42,8 +43,16 @@ class BuildPlugin : Plugin<Project> {
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
         compileOptions {
-            setSourceCompatibility(JavaVersion.VERSION_1_8)
-            setTargetCompatibility(JavaVersion.VERSION_1_8)
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
+        buildTypes {
+            getByName("debug") {
+                matchingFallbacks = listOf("release")
+            }
+        }
+        lintOptions {
+            isCheckReleaseBuilds = false
         }
     }
 
@@ -55,9 +64,20 @@ class BuildPlugin : Plugin<Project> {
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             consumerProguardFiles("consumer-rules.pro")
         }
+        buildTypes {
+            getByName("release") {
+                isMinifyEnabled = false
+            }
+        }
         compileOptions {
-            setSourceCompatibility(JavaVersion.VERSION_1_8)
-            setTargetCompatibility(JavaVersion.VERSION_1_8)
+            sourceCompatibility = JavaVersion.VERSION_1_8
+            targetCompatibility = JavaVersion.VERSION_1_8
+        }
+        libraryVariants.all {
+            generateBuildConfigProvider.configure { isEnabled = false }
+        }
+        variantFilter {
+            ignore = buildType.name != "release"
         }
     }
 }

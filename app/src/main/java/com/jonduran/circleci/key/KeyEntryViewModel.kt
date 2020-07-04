@@ -1,18 +1,17 @@
 package com.jonduran.circleci.key
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jonduran.circleci.data.user.UserRepository
-import com.jonduran.circleci.viewmodel.AssistedProvider
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
-class KeyEntryViewModel @AssistedInject constructor(
+class KeyEntryViewModel @ViewModelInject constructor(
     @Assisted savedState: SavedStateHandle,
     private val userRepository: UserRepository
 ) : ViewModel() {
@@ -65,10 +64,5 @@ class KeyEntryViewModel @AssistedInject constructor(
         object InvalidKey : State()
         object Success : State()
         data class Failure(val error: Throwable) : State()
-    }
-
-    @AssistedInject.Factory
-    interface Provider : AssistedProvider<KeyEntryViewModel> {
-        override fun provide(savedState: SavedStateHandle): KeyEntryViewModel
     }
 }

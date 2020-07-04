@@ -9,15 +9,11 @@ import com.jonduran.circleci.common.ui.list.Item
 import com.jonduran.circleci.databinding.FragmentBuildListBinding
 import com.jonduran.circleci.extensions.launchWhenViewCreated
 import com.jonduran.circleci.extensions.observe
-import com.jonduran.circleci.viewmodel.InjectedViewModelFactory
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class BuildListFragment @Inject constructor(
-    private val factoryProducer: InjectedViewModelFactory.Producer
-) : Fragment(R.layout.fragment_build_list) {
-    private val viewModel by viewModels<BuildListViewModel> {
-        factoryProducer.produce(this, arguments)
-    }
+@AndroidEntryPoint
+class BuildListFragment : Fragment(R.layout.fragment_build_list) {
+    private val viewModel by viewModels<BuildListViewModel>()
 
     init {
         launchWhenViewCreated {

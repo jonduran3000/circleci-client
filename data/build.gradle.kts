@@ -3,16 +3,11 @@ plugins {
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 plugins.apply(BuildPlugin::class)
 
 android {
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
     compileOptions {
         coreLibraryDesugaringEnabled = true
     }
@@ -26,6 +21,8 @@ dependencies {
     api(Dependencies.ANDROIDX_SECURITY)
     implementation(Dependencies.DAGGER)
     kapt(Dependencies.DAGGER_COMPILER)
+    implementation(Dependencies.HILT)
+    kapt(Dependencies.HILT_ANDROID_COMPILER)
     coreLibraryDesugaring(Dependencies.JAVA_CORE_LIBS)
     implementation(Dependencies.STORE)
     testImplementation(Dependencies.JUNIT)

@@ -1,17 +1,16 @@
 package com.jonduran.circleci
 
 import android.os.Bundle
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.jonduran.circleci.data.user.UserRepository
-import com.jonduran.circleci.viewmodel.AssistedProvider
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
-class MainViewModel @AssistedInject constructor(
+class MainViewModel @ViewModelInject constructor(
     @Assisted private val savedState: SavedStateHandle,
     private val repository: UserRepository
 ) : ViewModel() {
@@ -38,10 +37,5 @@ class MainViewModel @AssistedInject constructor(
         object Success : State()
         object Unauthorized : State()
         data class Failure(val error: Throwable) : State()
-    }
-
-    @AssistedInject.Factory
-    interface Provider : AssistedProvider<MainViewModel> {
-        override fun provide(savedState: SavedStateHandle): MainViewModel
     }
 }

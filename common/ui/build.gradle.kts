@@ -7,10 +7,6 @@ plugins.apply(BuildPlugin::class)
 
 android {
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
     }
     buildFeatures {
         viewBinding = true
@@ -27,7 +23,6 @@ dependencies {
     implementation(Dependencies.ANDROIDX_LIFECYCLE_EXT)
     implementation(Dependencies.ANDROIDX_LIFECYCLE_JAVA8)
     implementation(Dependencies.ANDROIDX_RECYCLERVIEW)
-    implementation(Dependencies.DAGGER_ANDROID)
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROIDX_TEST_JUNIT)
 }

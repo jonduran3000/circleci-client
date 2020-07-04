@@ -1,6 +1,8 @@
 package com.jonduran.circleci.build
 
 import android.app.Application
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import com.jonduran.circleci.CircleCiApp
@@ -9,15 +11,12 @@ import com.jonduran.circleci.common.ui.list.Item
 import com.jonduran.circleci.data.build.BuildRepository
 import com.jonduran.circleci.extensions.elapsedTime
 import com.jonduran.circleci.extensions.prettyPrint
-import com.jonduran.circleci.viewmodel.AssistedProvider
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.Duration
 import java.time.temporal.ChronoUnit.MILLIS
 
-class BuildListViewModel @AssistedInject constructor(
+class BuildListViewModel @ViewModelInject constructor(
     @Assisted savedState: SavedStateHandle,
     application: Application,
     private val repository: BuildRepository
@@ -46,11 +45,6 @@ class BuildListViewModel @AssistedInject constructor(
     }
 
     private val BuildEntity.buildTime: Duration get() = Duration.of(buildTimeInMillis, MILLIS)
-
-    @AssistedInject.Factory
-    interface Provider : AssistedProvider<BuildListViewModel> {
-        override fun provide(savedState: SavedStateHandle): BuildListViewModel
-    }
 
     sealed class State {
         object Loading : State()

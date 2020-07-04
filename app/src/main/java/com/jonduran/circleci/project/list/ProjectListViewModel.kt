@@ -1,5 +1,7 @@
 package com.jonduran.circleci.project.list
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -7,11 +9,8 @@ import androidx.lifecycle.switchMap
 import com.jonduran.circleci.cache.entity.SourceControl
 import com.jonduran.circleci.data.project.ProjectRepository
 import com.jonduran.circleci.extensions.combineLatest
-import com.jonduran.circleci.viewmodel.AssistedProvider
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 
-class ProjectListViewModel @AssistedInject constructor(
+class ProjectListViewModel @ViewModelInject constructor(
     @Assisted savedState: SavedStateHandle,
     private val repository: ProjectRepository
 ) : ViewModel() {
@@ -37,10 +36,5 @@ class ProjectListViewModel @AssistedInject constructor(
         } catch (e: Exception) {
             emit(State.Failure(e))
         }
-    }
-
-    @AssistedInject.Factory
-    interface Provider : AssistedProvider<ProjectListViewModel> {
-        override fun provide(savedState: SavedStateHandle): ProjectListViewModel
     }
 }

@@ -1,6 +1,6 @@
 package com.jonduran.circleci.data
 
-import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV
@@ -12,18 +12,22 @@ import com.jonduran.circleci.data.utils.checkBackgroundThread
 import com.jonduran.circleci.remote.RemoteModule
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 
 @Module(includes = [CacheModule::class, DataBindings::class, RemoteModule::class])
+@InstallIn(ApplicationComponent::class)
 object DataModule {
     @Provides
-    fun providePreferences(app: Application): SharedPreferences {
+    fun providePreferences(@ApplicationContext context: Context): SharedPreferences {
         checkBackgroundThread()
         val alias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         return EncryptedSharedPreferences.create(
             "stable-preferences",
             alias,
-            app,
+            context,
             AES256_SIV,
             AES256_GCM
         )
@@ -36,5 +40,4 @@ object DataModule {
             .setExpireAfterTimeUnit(TimeUnit.MINUTES)
             .build()
     }
-
 }

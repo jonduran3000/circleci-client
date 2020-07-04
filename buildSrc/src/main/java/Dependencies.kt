@@ -1,7 +1,8 @@
 object Versions {
     const val KOTLIN = "1.3.72"
     const val KOTLINX_COROUTINES = "1.3.6"
-    const val DAGGER = "2.25.2"
+    const val DAGGER = "2.28.1"
+    const val HILT = "2.28.1-alpha"
     const val OKHTTP = "4.2.2"
     const val RETROFIT = "2.6.1"
     const val GLIDE = "4.10.0"
@@ -11,9 +12,10 @@ object Versions {
 }
 
 object Plugins {
-    const val ANDROID = "com.android.tools.build:gradle:4.0.0-beta05"
+    const val ANDROID = "com.android.tools.build:gradle:4.0.0"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
     const val KOTLIN_SERIALIZATION = "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}"
+    const val HILT = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
 }
 
 object Dependencies {
@@ -46,6 +48,10 @@ object Dependencies {
     const val DAGGER_ANDROID_COMPILER = "com.google.dagger:dagger-android-processor:${Versions.DAGGER}"
     const val ASSISTED_INJECT = "com.squareup.inject:assisted-inject-annotations-dagger2:${Versions.ASSISTED_INJECT}"
     const val ASSISTED_INJECT_COMPILER = "com.squareup.inject:assisted-inject-processor-dagger2:${Versions.ASSISTED_INJECT}"
+    const val HILT = "com.google.dagger:hilt-android:${Versions.HILT}"
+    const val HILT_ANDROID_COMPILER = "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
+    const val HILT_VIEWMODEL = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha01"
+    const val HILT_COMPILER = "androidx.hilt:hilt-compiler:1.0.0-alpha01"
     const val OKHTTP = "com.squareup.okhttp3:okhttp:${Versions.OKHTTP}"
     const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Versions.OKHTTP}"
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
@@ -56,8 +62,6 @@ object Dependencies {
     const val GLIDE = "com.github.bumptech.glide:glide:${Versions.GLIDE}"
     const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${Versions.GLIDE}"
     const val MATERIAL = "com.google.android.material:material:1.2.0-alpha02"
-    const val THREETEN_ABP = "com.jakewharton.threetenabp:threetenabp:1.2.2"
-    const val THREETEN_BP = "org.threeten:threetenbp:1.4.1"
     const val TRUTH = "androidx.test.ext:truth:1.2.0"
     const val JAVA_CORE_LIBS = "com.android.tools:desugar_jdk_libs:1.0.5"
     const val STORE = "com.dropbox.mobile.store:store4:4.0.0-alpha03"

@@ -9,15 +9,11 @@ import com.jonduran.circleci.R
 import com.jonduran.circleci.common.ui.fragment.BaseFragment
 import com.jonduran.circleci.common.ui.utils.viewBinding
 import com.jonduran.circleci.databinding.FragmentProjectListBinding
-import com.jonduran.circleci.viewmodel.InjectedViewModelFactory
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class ProjectListFragment @Inject constructor(
-    private val factoryProducer: InjectedViewModelFactory.Producer
-) : BaseFragment(R.layout.fragment_project_list) {
-    private val viewModel by viewModels<ProjectListViewModel> {
-        factoryProducer.produce(this, arguments)
-    }
+@AndroidEntryPoint
+class ProjectListFragment : BaseFragment(R.layout.fragment_project_list) {
+    private val viewModel by viewModels<ProjectListViewModel>()
     private val binding by viewBinding(FragmentProjectListBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

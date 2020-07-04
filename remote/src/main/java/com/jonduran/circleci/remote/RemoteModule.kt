@@ -5,6 +5,8 @@ import com.jonduran.circleci.remote.annotation.Authorization
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import okhttp3.Call
@@ -18,6 +20,7 @@ import retrofit2.create
 import javax.inject.Singleton
 
 @Module
+@InstallIn(ApplicationComponent::class)
 object RemoteModule {
     @Provides
     fun providesOkHttpClient(@Authorization authorization: Interceptor): OkHttpClient {
